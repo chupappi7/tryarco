@@ -157,8 +157,20 @@
   .trial i { height: 28px; border-radius: 6px; background: rgba(255,255,255,.08); }
   .trial i.on { background: rgba(255,255,255,.22); }
   .trial i.rem { background: linear-gradient(180deg, #fff, #CFE3FF); box-shadow: 0 0 16px rgba(220,235,255,.7); }
-  .trial-l { display: flex; justify-content: space-between; font-size: 11px; color: var(--dim); font-weight: 700; margin-top: 8px; }
-  .trial-l .r { color: #fff; }
+  /* Labels on the same 14 columns, so "Reminder" sits over day 12. */
+  .trial-l { display: grid; grid-template-columns: repeat(14, 1fr); font-size: 11px; color: var(--dim); font-weight: 700; margin-top: 8px; }
+  .trial-l span:nth-child(1) { grid-column: 1 / 5; }
+  .trial-l span.r { grid-column: 9 / 15; justify-self: start; padding-left: calc((100% / 6) * 3 - 26px); color: #fff; }
+  .trial-l span:nth-child(3) { display: none; }
+  .trial-card { text-align: left; }
+  .big14 { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .big14 strong { font-size: 76px; line-height: .9; font-weight: 800; letter-spacing: -.05em;
+                  text-shadow: 0 0 24px rgba(255,255,255,.35); }
+  .big14 span { font-size: 15px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); line-height: 1.25; }
+  .start { display: block; text-align: center; margin-top: 22px; background: #fff; color: #000; font-weight: 800; font-size: 15.5px;
+           padding: 14px; border-radius: 999px; box-shadow: 0 0 22px rgba(255,255,255,.25); transition: transform .2s; }
+  .start:hover { transform: translateY(-2px); }
+  .fine { text-align: center; margin-top: 10px; font-size: 12.5px; color: var(--dim); font-weight: 600; }
   .note { margin-top: 16px; font-size: 13.5px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
   .note svg { width: 18px; height: 18px; flex: none; color: var(--green); margin-top: 2px; }
 
@@ -238,7 +250,7 @@
       <a class="tile" href="#widgets" style="--c:#30D158"><div class="ic"><svg><use href="#i-widget"/></svg></div>Widgets</a>
       <a class="tile" href="#wake" style="--c:#FFB020"><div class="ic"><svg><use href="#i-wake"/></svg></div>Wake up</a>
       <a class="tile" href="#screen-time" style="--c:#5E5CE6"><div class="ic"><svg><use href="#i-screen"/></svg></div>Screen Time</a>
-      <a class="tile" href="#subscription" style="--c:#E8ECF2"><div class="ic"><svg><use href="#i-sub"/></svg></div>Subscription</a>
+      <a class="tile" href="#subscription" style="--c:#E8ECF2"><div class="ic"><svg><use href="#i-sub"/></svg></div>Free trial</a>
     </div>
   </div>
 </header>
@@ -247,7 +259,7 @@
 <div class="bar" id="bar"><div class="pills">
   <a href="#routines">Routines</a><a href="#blocked-hours">Blocked Hours</a><a href="#focus">Focus</a><a href="#plan">Plan your day</a>
   <a href="#habits">Habits</a><a href="#tasks">Tasks</a><a href="#widgets">Widgets</a><a href="#wake">Wake up</a>
-  <a href="#screen-time">Screen Time</a><a href="#subscription">Subscription</a>
+  <a href="#screen-time">Screen Time</a><a href="#subscription">Free trial</a>
 </div></div>
 
 <section class="guide" id="routines" style="--c:#BF5AF2">
@@ -414,22 +426,23 @@
 
 <section class="guide flip" id="subscription" style="--c:#DCE8FF">
   <div class="copy">
-    <div class="ghead"><div class="ic"><svg><use href="#i-sub"/></svg></div><div class="eyebrow">Subscription</div></div>
-    <h2>Everything included.</h2>
-    <p>One subscription unlocks all of <span class="wm" role="img" aria-label="ARCO"></span>: planning, habits, blocking, widgets and alarms. New users start with a 14-day free trial.</p>
+    <div class="ghead"><div class="ic"><svg><use href="#i-sub"/></svg></div><div class="eyebrow">Free trial</div></div>
+    <h2>Try everything free for 14 days.</h2>
+    <p>Every feature, no limits: planning, habits, blocking, widgets and alarms. After the trial, one subscription keeps all of it.</p>
     <ul class="steps">
       <li><span class="wm" role="img" aria-label="ARCO"></span> reminds you two days before the trial ends.</li>
       <li>Cancel anytime: iPhone <b>Settings → your name → Subscriptions → ARCO</b>.</li>
-      <li>Bought on another device? Tap <b>Restore</b> on the subscribe screen.</li>
+      <li>Already subscribed on another device? Tap <b>Restore</b> on the subscribe screen.</li>
       <li>If it ends, <span class="wm" role="img" aria-label="ARCO"></span> locks until you subscribe again. Everything you made stays in your iCloud.</li>
     </ul>
   </div>
   <div class="vis">
-    <div class="card">
-      <div class="lab">YOUR FREE TRIAL</div>
+    <div class="card trial-card">
+      <div class="big14"><strong>14</strong><span>days<br>free</span></div>
       <div class="trial" id="trial"></div>
-      <div class="trial-l"><span>Day 1</span><span class="r">Reminder</span><span>Day 14</span></div>
-      <div class="row" style="margin-top:20px"><span class="pill" style="background:rgba(255,255,255,.12);color:#fff">ALL OF IT</span>Plan · habits · blocking · widgets · alarms</div>
+      <div class="trial-l"><span>Today</span><span class="r">Reminder</span><span>Day 14</span></div>
+      <a class="start" href="https://apps.apple.com/app/id6761037446">Start your free trial</a>
+      <div class="fine">No charge today. Cancel anytime in two taps.</div>
     </div>
   </div>
 </section>
