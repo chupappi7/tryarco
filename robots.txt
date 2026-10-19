@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /connect.html
+Disallow: /fonts.html
+
+Sitemap: https://tryarco.app/sitemap.xml

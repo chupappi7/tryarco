@@ -357,6 +357,16 @@
     .can { grid-template-columns: 1fr; }
   }
 
+  /* ---------- guides row ---------- */
+  .reads { padding: 40px 0 10px; }
+  .reads-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+  .reads-grid a { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 22px; border-radius: 20px;
+                  background: #0E1014; border: 1px solid var(--line); font-size: 17px; font-weight: 700; line-height: 1.35;
+                  text-wrap: balance; transition: border-color .2s, transform .2s; }
+  .reads-grid a span { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+  .reads-grid a:hover { border-color: rgba(255,255,255,.2); transform: translateY(-2px); }
+  @media (max-width: 860px) { .reads-grid { grid-template-columns: 1fr; } }
+
   /* ---------- closing ---------- */
   .closing { text-align: center; padding: 110px 24px 120px; position: relative; overflow: hidden; }
   .closing::before { content: ""; position: absolute; left: 50%; top: 40%; width: 760px; height: 520px;
@@ -701,6 +711,17 @@ Thursday's exam, Call mom, and Gym at 18:00.</div>
   </div>
 </section>
 
+<section class="reads">
+  <div class="wrap">
+    <div class="eyebrow rv" style="text-align:center">From the guides</div>
+    <div class="reads-grid">
+      <a class="rv" href="guides/block-apps-during-work-hours-iphone.html">How to block apps during work hours on iPhone<span>Read →</span></a>
+      <a class="rv" href="guides/stop-doomscrolling-at-night.html">How to stop doomscrolling at night<span>Read →</span></a>
+      <a class="rv" href="guides/time-blocking-on-iphone.html">How to time block your day on iPhone<span>Read →</span></a>
+    </div>
+  </div>
+</section>
+
 <section class="closing rv">
   <img class="icon" src="icon.png" alt="ARCO">
   <h2>Get your time back<br>from your phone.</h2>
@@ -715,7 +736,8 @@ Thursday's exam, Call mom, and Gym at 18:00.</div>
 
 <footer><div class="foot">
   <span>© 2026 <span class="wm" role="img" aria-label="ARCO"></span></span>
-  <a href="help.html">Guides</a>
+  <a href="help.html">How it works</a>
+  <a href="guides/">Guides</a>
   <a href="support.html">Support</a>
   <a href="privacy.html">Privacy</a>
   <a href="terms.html">Terms</a>
