@@ -512,7 +512,9 @@
     pills.forEach(p => {
       const on = p.getAttribute("href") === "#" + e.target.id;
       p.classList.toggle("on", on);
-      if (on) p.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      // Scroll only the pill row sideways. scrollIntoView also moved the
+      // page, which jumped it back each time a new guide lit up.
+      if (on) { const row = p.parentElement; row.scrollTo({ left: p.offsetLeft - (row.clientWidth - p.offsetWidth) / 2, behavior: "smooth" }); }
     });
   }), { rootMargin: "-45% 0px -50% 0px" });
   document.querySelectorAll(".guide").forEach(g => spy.observe(g));
