@@ -186,10 +186,10 @@
   .can li b { display: none; }
   .shots { position: relative; height: 600px; }
   .feature { overflow-x: clip; isolation: isolate; }
-  .shots::before { content: ""; position: absolute; inset: -8% -16%; border-radius: 50%; z-index: 0;
+  .shots::before { content: ""; position: absolute; inset: -22% -34%; border-radius: 50%; z-index: 0;
                    background: radial-gradient(closest-side, var(--glow, rgba(255,255,255,.16)) 0%,
                                                var(--glow, rgba(255,255,255,.16)) 40%, transparent 78%);
-                   filter: blur(28px); animation: halo 9s ease-in-out infinite alternate; }
+                   filter: blur(44px); animation: halo 9s ease-in-out infinite alternate; }
   @keyframes halo {
     0%   { transform: translate(-8%, 4%) scale(.9);  opacity: .55; }
     100% { transform: translate(8%, -5%) scale(1.15); opacity: 1; }
@@ -248,13 +248,19 @@
   .ring { position: relative; width: 132px; height: 132px; flex: none; }
   .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
   .ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 28px; font-weight: 800; letter-spacing: -.03em; }
-  .ring .arc { stroke-dasharray: 340; stroke-dashoffset: 340; animation: arc 2.4s cubic-bezier(.2,.7,.2,1) forwards .3s; }
+  .ring .arc { stroke-dasharray: 340; stroke-dashoffset: 139; transition: stroke-dashoffset 1s linear; }
   @keyframes arc { to { stroke-dashoffset: 100; } }
   .chips { display: grid; gap: 8px; }
   .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #D9D7D2;
           padding: 7px 12px 7px 8px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
   .chip i { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-style: normal; font-size: 11px; }
   .chip.lock i { background: rgba(70,220,120,.15); color: #46DC78; }
+  /* Real app icons, dimmed, with a lock badge: how a blocked app looks. */
+  .mapp { position: relative; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; }
+  .mapp > svg { width: 14px; height: 14px; opacity: .6; }
+  .mlock { position: absolute; right: -4px; bottom: -4px; width: 12px; height: 12px; border-radius: 50%; background: #fff;
+           display: grid !important; place-items: center; box-shadow: 0 0 0 1.5px #0E1014; }
+  .mlock svg { width: 7px; height: 7px; fill: #000; }
 
   /* blocked hours */
   .day { position: relative; height: 34px; border-radius: 10px; background: rgba(255,255,255,.05); overflow: hidden; }
@@ -293,8 +299,9 @@
   .bt.pair .half + .half { border-left: 1px solid var(--line); }
   .bt.pair h4 { margin-top: 18px; }
   .bt .ic { flex: none; width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
-                 background: rgba(255,214,10,.1); border: 1px solid rgba(255,214,10,.22); }
-  .bt .ic svg { width: 21px; height: 21px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+            background: color-mix(in srgb, var(--c, #FFD60A) 14%, transparent);
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, #FFD60A) 32%, transparent), 0 0 18px color-mix(in srgb, var(--c, #FFD60A) 18%, transparent); }
+  .bt .ic svg { width: 21px; height: 21px; stroke: var(--c, #FFD60A); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   @media (max-width: 900px) {
     .bento { grid-template-columns: repeat(2, 1fr); }
@@ -317,6 +324,9 @@
   .works { margin-top: 24px; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
   .agent-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; align-items: center; }
   .agent-list span svg { width: 17px; height: 17px; flex: none; }
+  /* Codex's own app icon: the mark on a white rounded square. */
+  .appmark { width: 20px; height: 20px; border-radius: 5px; background: #fff; display: grid; place-items: center; flex: none; }
+  .appmark svg { width: 14px !important; height: 14px !important; }
   .agent-list span { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; padding: 8px 14px; border-radius: 12px; color: #E6E4DF;
                      background: rgba(255,255,255,.05); border: 1px solid var(--line); }
   .agent-list span.more { color: var(--muted); font-weight: 600; background: none; border: 0; padding: 8px 2px; }
@@ -448,6 +458,24 @@
   <h2>A planner that <em>protects</em> the plan.</h2>
 </div>
 
+<section class="feature flip">
+  <div class="wrap">
+    <div class="copy rv">
+      <div class="eyebrow">Wake up</div>
+      <h3>Mornings that<br>start on time.</h3>
+      <p>A set of alarms minutes apart, on the days you choose. They ring like the Clock app's, even on silent, and your day starts on the timeline.</p>
+      <ul class="helps">
+        <li>Up to 5 alarms, 3 to 15 minutes apart</li>
+        <li>Your sound, snooze and days, set in seconds</li>
+        <li>The Wake up block opens your day on Today</li>
+      </ul>
+    </div>
+    <div class="shots single rv" style="--glow: rgba(255,176,32,.30)">
+      <div class="phone a"><div class="screen"><img src="assets/screens/wake.jpg" alt="ARCO wake-up alarms" loading="lazy"></div></div>
+    </div>
+  </div>
+</section>
+
 <section class="feature">
   <div class="wrap">
     <div class="copy rv">
@@ -564,14 +592,14 @@
         <div class="vis focus-vis">
           <div class="ring">
             <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
-              <circle class="arc" cx="60" cy="60" r="54" fill="none" stroke="url(#g)" stroke-width="8" stroke-linecap="round"/>
+              <circle class="arc" id="focusArc" cx="60" cy="60" r="54" fill="none" stroke="url(#g)" stroke-width="8" stroke-linecap="round"/>
               <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#46DC78"/><stop offset="1" stop-color="#B8F5C9"/></linearGradient></defs></svg>
-            <b class="mono">17:51</b>
+            <b class="mono" id="focusClock">17:51</b>
           </div>
           <div class="chips">
-            <span class="chip lock"><i>&#9679;</i>Instagram locked</span>
-            <span class="chip lock"><i>&#9679;</i>TikTok locked</span>
-            <span class="chip"><i style="background:rgba(255,214,10,.14);color:#FFD60A">&#10074;&#10074;</i>5-min break</span>
+            <span class="chip"><b class="mapp" style="background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%)"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg><i class="mlock"><svg viewBox="0 0 24 24"><path d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A2.5 2.5 0 0 1 20 12.5v7A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5v-7A2.5 2.5 0 0 1 6.5 10zm2.4 0h5.2V7.5a2.6 2.6 0 0 0-5.2 0z"/></svg></i></b>Instagram locked</span>
+            <span class="chip"><b class="mapp" style="background:#000;box-shadow:inset 0 0 0 1px #333"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg><i class="mlock"><svg viewBox="0 0 24 24"><path d="M7 10V7.5a5 5 0 0 1 10 0V10h.5A2.5 2.5 0 0 1 20 12.5v7A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5v-7A2.5 2.5 0 0 1 6.5 10zm2.4 0h5.2V7.5a2.6 2.6 0 0 0-5.2 0z"/></svg></i></b>TikTok locked</span>
+            <span class="chip"><i style="background:rgba(255,214,10,.14)"><svg viewBox="0 0 24 24" width="11" height="11" fill="#FFD60A"><rect x="5" y="4" width="5" height="16" rx="1.6"/><rect x="14" y="4" width="5" height="16" rx="1.6"/></svg></i>5-min break</span>
           </div>
         </div>
       </div>
@@ -612,11 +640,11 @@
       </div>
       <div class="bt w4 pair rv">
         <div class="half">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.5-9.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9H7z"/></svg></div>
+          <div class="ic" style="--c:#3A9BFF"><svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.5-9.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9H7z"/></svg></div>
           <h4>iCloud sync</h4><p>Everything lives in your own iCloud, on all your devices.</p>
         </div>
         <div class="half">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div class="ic" style="--c:#34D17A"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
           <h4>Private by design</h4><p>No account and no ads. Your plans and screen time stay yours.</p>
         </div>
       </div>
@@ -633,7 +661,7 @@
       <div class="works">Works with</div>
       <div class="agent-list">
         <span><svg viewBox="0 0 24 24" fill="#D97757"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>Claude Code / Desktop</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="#E6E4DF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="3.5"/><path d="M7 10l3 2.5L7 15M12.5 15.5H17"/></svg>Codex</span>
+        <span><i class="appmark"><svg viewBox="0 0 24 24" fill="#000"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg></i>Codex</span>
         <span><svg viewBox="0 0 24 24" fill="#F2F2F2"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg>Cursor</span>
         <span class="more">and any MCP agent</span>
       </div>
@@ -759,6 +787,21 @@ Thursday's exam, Call mom, and Gym at 18:00.</div>
     if (i >= 22) c.className = "on"; else if ([3, 7, 8, 12, 15, 18].includes(i)) c.className = "mid";
     streak.appendChild(c);
   }
+  // The focus ring counts down from 17:51 of a 30-minute session, and
+  // starts over when it runs out.
+  (() => {
+    const clock = document.getElementById("focusClock"), arc = document.getElementById("focusArc");
+    if (!clock || !arc) return;
+    const total = 30 * 60, start = 17 * 60 + 51; let left = start;
+    const draw = () => {
+      clock.textContent = String(Math.floor(left / 60)).padStart(2, "0") + ":" + String(left % 60).padStart(2, "0");
+      arc.style.strokeDashoffset = (340 * (1 - left / total)).toFixed(1);
+    };
+    draw();
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+      setInterval(() => { left = left > 0 ? left - 1 : start; draw(); }, 1000);
+  })();
+
   // The hero's water: light moving over the floor of a pool, drawn live.
   // Slow on purpose; one still frame when the viewer prefers less motion.
   (() => {
