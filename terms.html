@@ -53,7 +53,7 @@
   .tldr p { color: #E6E4DF; margin-top: 10px; font-size: 16.5px; }
 
   .legal h2 { font-size: 23px; font-weight: 800; letter-spacing: -.02em; margin: 44px 0 10px; display: flex; gap: 12px; align-items: baseline; }
-  .legal h2 span { color: var(--dim); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .legal h2 > span:first-child { color: var(--dim); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .legal p, .legal li { color: var(--muted); font-size: 16px; }
   .legal p + p { margin-top: 10px; }
   .legal ul { list-style: none; margin: 12px 0; display: grid; gap: 10px; }
@@ -100,6 +100,11 @@
   .rise { opacity: 0; transform: translateY(24px); filter: blur(4px); transition: opacity .9s ease, transform 1s cubic-bezier(.16,.8,.2,1), filter .9s ease; }
   .rise.in { opacity: 1; transform: none; filter: none; }
   @media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; filter: none; transition: none; } .faq .ans { transition: none; } }
+
+  /* No single word left alone on a line: headings balance their lines,
+     body text avoids a one-word last line. */
+  h1, h2, h3, h4, .lede, summary { text-wrap: balance; }
+  p, li, .tip, .note { text-wrap: pretty; }
 </style>
 </head>
 <body>
@@ -124,14 +129,14 @@
     <div class="eyebrow">In short</div>
     <p><span class="wm" role="img" aria-label="ARCO"></span> is a subscription app. New users get 14 days free with everything included. After that it renews through Apple until you cancel, which you can do anytime in iPhone Settings.</p>
   </div>
-  <section class="rise"><h2><span>01</span>Agreement</h2><p>By downloading or using <span class="wm" role="img" aria-label="ARCO"></span> ("the app"), you agree to these terms and to Apple's standard <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Licensed Application End User License Agreement</a>. If you don't agree, don't use the app.</p></section>
-  <section class="rise"><h2><span>02</span>What <span class="wm" role="img" aria-label="ARCO"></span> is</h2><p><span class="wm" role="img" aria-label="ARCO"></span> is a day planner and app blocker: timed day plans, tasks, habits, focus sessions, Blocked Hours, wake-up alarms, widgets and insights. Using it requires an active subscription or free trial. Without one, the app is locked; what you made stays in your iCloud.</p></section>
-  <section class="rise"><h2><span>03</span>Subscriptions and the free trial</h2><ul><li><span class="wm" role="img" aria-label="ARCO"></span> is offered as auto-renewing subscriptions, yearly or monthly. Prices in your currency are shown before you buy and may vary by region. <span class="wm" role="img" aria-label="ARCO"></span> sometimes offers a discounted yearly plan once.</li><li>Eligible new subscribers get a 14-day free trial of the yearly plan. Cancel before it ends and you won't be charged.</li><li>Payment is charged to your Apple Account when you confirm, or when the trial ends. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period.</li><li>Manage or cancel anytime in iPhone Settings → your name → Subscriptions. Deleting the app doesn't cancel a subscription.</li><li>Refunds are handled by Apple under App Store policy: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</li></ul></section>
-  <section class="rise"><h2><span>04</span>Strict mode</h2><p>Strict mode deliberately prevents ending a focus session before its timer runs out. By turning it on you accept that the session can't be ended early. Phone calls, emergency features and every app not on your block list stay available.</p></section>
-  <section class="rise"><h2><span>05</span>Acceptable use</h2><p>Don't reverse-engineer, resell or misuse the app, and don't use it to violate anyone else's rights or Apple's terms.</p></section>
-  <section class="rise"><h2><span>06</span>No warranties</h2><p><span class="wm" role="img" aria-label="ARCO"></span> is provided "as is". It's a productivity tool, not a medical or safety device. The blocker is built on Apple's Screen Time framework, but no software can guarantee you won't find another way to get distracted. To the maximum extent permitted by law, we aren't liable for missed work, missed alarms, or anything you did or didn't do while using <span class="wm" role="img" aria-label="ARCO"></span>.</p></section>
-  <section class="rise"><h2><span>07</span>Changes</h2><p>Features and prices may change. Material changes to these terms will be posted here with a new effective date. Subscribers are told about price changes as Apple's rules require.</p></section>
-  <section class="rise"><h2><span>08</span>Contact</h2><p><a href="mailto:support@tryarco.app">support@tryarco.app</a></p></section>
+  <section class="rise"><h2><span>01</span><span class="t">Agreement</span></h2><p>By downloading or using <span class="wm" role="img" aria-label="ARCO"></span> ("the app"), you agree to these terms and to Apple's standard <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Licensed Application End User License Agreement</a>. If you don't agree, don't use the app.</p></section>
+  <section class="rise"><h2><span>02</span><span class="t">What <span class="wm" role="img" aria-label="ARCO"></span> is</span></h2><p><span class="wm" role="img" aria-label="ARCO"></span> is a day planner and app blocker: timed day plans, tasks, habits, focus sessions, Blocked Hours, wake-up alarms, widgets and insights. Using it requires an active subscription or free trial. Without one, the app is locked; what you made stays in your iCloud.</p></section>
+  <section class="rise"><h2><span>03</span><span class="t">Subscriptions and the free trial</span></h2><ul><li><span class="wm" role="img" aria-label="ARCO"></span> is offered as auto-renewing subscriptions, yearly or monthly. Prices in your currency are shown before you buy and may vary by region. <span class="wm" role="img" aria-label="ARCO"></span> sometimes offers a discounted yearly plan once.</li><li>Eligible new subscribers get a 14-day free trial of the yearly plan. Cancel before it ends and you won't be charged.</li><li>Payment is charged to your Apple Account when you confirm, or when the trial ends. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period.</li><li>Manage or cancel anytime in iPhone Settings → your name → Subscriptions. Deleting the app doesn't cancel a subscription.</li><li>Refunds are handled by Apple under App Store policy: <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</li></ul></section>
+  <section class="rise"><h2><span>04</span><span class="t">Strict mode</span></h2><p>Strict mode deliberately prevents ending a focus session before its timer runs out. By turning it on you accept that the session can't be ended early. Phone calls, emergency features and every app not on your block list stay available.</p></section>
+  <section class="rise"><h2><span>05</span><span class="t">Acceptable use</span></h2><p>Don't reverse-engineer, resell or misuse the app, and don't use it to violate anyone else's rights or Apple's terms.</p></section>
+  <section class="rise"><h2><span>06</span><span class="t">No warranties</span></h2><p><span class="wm" role="img" aria-label="ARCO"></span> is provided "as is". It's a productivity tool, not a medical or safety device. The blocker is built on Apple's Screen Time framework, but no software can guarantee you won't find another way to get distracted. To the maximum extent permitted by law, we aren't liable for missed work, missed alarms, or anything you did or didn't do while using <span class="wm" role="img" aria-label="ARCO"></span>.</p></section>
+  <section class="rise"><h2><span>07</span><span class="t">Changes</span></h2><p>Features and prices may change. Material changes to these terms will be posted here with a new effective date. Subscribers are told about price changes as Apple's rules require.</p></section>
+  <section class="rise"><h2><span>08</span><span class="t">Contact</span></h2><p><a href="mailto:support@tryarco.app">support@tryarco.app</a></p></section>
 </main>
 
 <footer><div class="foot">

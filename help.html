@@ -207,6 +207,11 @@
   .vis[data-sl] .pair .b { opacity: clamp(0, calc(var(--p) * 1.6), 1);
              transform: translate(calc((1 - var(--p)) * 120px), calc((1 - var(--p)) * -40px)) rotate(calc(4deg + (1 - var(--p)) * 10deg)); }
   @media (prefers-reduced-motion: reduce) { .vis::before { animation: none; } }
+
+  /* No single word left alone on a line: headings balance their lines,
+     body text avoids a one-word last line. */
+  h1, h2, h3, h4, .lede, summary { text-wrap: balance; }
+  p, li, .tip, .note { text-wrap: pretty; }
 </style>
 </head>
 <body>

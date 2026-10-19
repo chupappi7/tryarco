@@ -66,6 +66,9 @@
   .contact { display: flex; gap: 22px; align-items: center; justify-content: space-between; }
   .contact h2 { font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
   .contact p { color: var(--muted); margin-top: 6px; }
+  .contact .mail { font-size: 19px; font-weight: 700; margin-top: 10px; }
+  .contact .mail a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.3); }
+  .contact .inapp { font-size: 15px; margin-top: 4px; }
   .btn { flex: none; background: #000; color: #fff; font-weight: 800; padding: 14px 22px; border-radius: 999px;
          box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 18px rgba(255,255,255,.3); transition: transform .2s; }
   .btn:hover { transform: translateY(-2px); }
@@ -100,6 +103,11 @@
   .rise { opacity: 0; transform: translateY(24px); filter: blur(4px); transition: opacity .9s ease, transform 1s cubic-bezier(.16,.8,.2,1), filter .9s ease; }
   .rise.in { opacity: 1; transform: none; filter: none; }
   @media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; filter: none; transition: none; } .faq .ans { transition: none; } }
+
+  /* No single word left alone on a line: headings balance their lines,
+     body text avoids a one-word last line. */
+  h1, h2, h3, h4, .lede, summary { text-wrap: balance; }
+  p, li, .tip, .note { text-wrap: pretty; }
 </style>
 </head>
 <body>
@@ -121,7 +129,9 @@
 </header>
 <main class="col faq">
   <div class="card contact rise">
-    <div><h2>Write to us</h2><p>support@tryarco.app, or in the app: <b>Settings → Feedback &amp; bugs</b>.</p></div>
+    <div><h2>Write to us</h2>
+      <p class="mail"><a href="mailto:support@tryarco.app">support@tryarco.app</a></p>
+      <p class="inapp">Or in the app: <b>Settings&nbsp;→ Feedback&nbsp;&amp;&nbsp;bugs</b></p></div>
     <a class="btn" href="mailto:support@tryarco.app">Email support</a>
   </div>
   <div class="quick">
@@ -130,16 +140,16 @@
     <a class="rise" href="privacy.html">Privacy<span>What stays on your phone</span></a>
   </div>
   <h2 class="eyebrow sec rise">Common questions</h2>
-  <details class="rise"><summary>Blocking isn't working</summary><div class="ans"><div><p>Check three things:</p><ol><li><b>Screen Time access</b> is on: iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span>.</li><li>You picked apps to block: in <span class="wm" role="img" aria-label="ARCO"></span>, <b>Settings → Apps to block</b>.</li><li>Your <b>subscription or trial is active</b>. When it ends, <span class="wm" role="img" aria-label="ARCO"></span> locks and stops blocking.</li></ol></div></div></details>
-  <details class="rise"><summary>How do I add a widget, or change which habit it shows?</summary><div class="ans"><div><p>Touch and hold your Home Screen, tap <b>Edit → Add Widget</b>, search for <span class="wm" role="img" aria-label="ARCO"></span> and add the one you like. To change what it shows, touch and hold the widget, tap <b>Edit Widget</b>, then <b>Habit</b> (or <b>Show</b> on the Tasks widget) and pick. Step by step with pictures in the <a href="help.html#widgets">Widgets guide</a>.</p></div></div></details>
-  <details class="rise"><summary>I'm stuck in Strict mode</summary><div class="ans"><div><p>That's Strict mode working: a strict session can't be ended before its timer runs out. Breaks still work (blocking pauses and comes back by itself), and every app that isn't on your block list works normally. It releases the moment the timer finishes.</p></div></div></details>
-  <details class="rise"><summary><span class="wm" role="img" aria-label="ARCO"></span> is locked</summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> locks when there's no active subscription or trial. Everything you made is still in your iCloud. Subscribe from the locked screen, or tap <b>Restore</b> if you already subscribed, for example on another iPhone.</p><p>Still locked after a purchase? Make sure you're signed in with the Apple Account that bought it, then email us your receipt and we'll sort it out.</p></div></div></details>
-  <details class="rise"><summary>How do I cancel?</summary><div class="ans"><div><p>Subscriptions are managed by Apple: iPhone <b>Settings → your name → Subscriptions → <span class="wm" role="img" aria-label="ARCO"></span> → Cancel</b>. You keep access until the end of the period you paid for. Cancel during the free trial and you won't be charged.</p></div></div></details>
-  <details class="rise"><summary>I was charged after my free trial</summary><div class="ans"><div><p>The 14-day trial turns into your chosen plan on day 14 unless it's cancelled before then. <span class="wm" role="img" aria-label="ARCO"></span> reminds you two days before, and shows it on Today. For a refund, ask Apple at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>. Refunds are Apple's decision, not ours.</p></div></div></details>
-  <details class="rise"><summary>My apps are still blocked after deleting <span class="wm" role="img" aria-label="ARCO"></span></summary><div class="ans"><div><p>Rare, but easy to fix. Blocking is enforced by iOS itself, so a block that was running when <span class="wm" role="img" aria-label="ARCO"></span> was removed can outlive the app. Reinstall <span class="wm" role="img" aria-label="ARCO"></span> and open it once: it clears its own blocks on launch. Or go to iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span> and turn access off. Neither costs you any data.</p></div></div></details>
-  <details class="rise"><summary>The screen time numbers look off</summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> shows the last 7 days from iOS Screen Time, which can differ from Apple's Monday-to-Sunday week in Settings. Screen Time also counts background audio and picture-in-picture. If one app's number is wildly different from Settings → Screen Time for the same day, email us: that's a bug we want to fix.</p></div></div></details>
-  <details class="rise"><summary>Moving to a new iPhone</summary><div class="ans"><div><p>Sign in with the same Apple Account and keep iCloud on for <span class="wm" role="img" aria-label="ARCO"></span>: your plans, habits and history sync over. Give <span class="wm" role="img" aria-label="ARCO"></span> Screen Time access once on the new phone, and tap <b>Restore</b> if it asks you to subscribe.</p></div></div></details>
-  <details class="rise"><summary>I have an idea for a feature</summary><div class="ans"><div><p>Please send it: <a href="mailto:support@tryarco.app">support@tryarco.app</a>. Short pitches get read fastest, and a lot of <span class="wm" role="img" aria-label="ARCO"></span> came from emails like that.</p></div></div></details>
+  <details class="rise"><summary><span class="q">Blocking isn't working</span></summary><div class="ans"><div><p>Check three things:</p><ol><li><b>Screen Time access</b> is on: iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span>.</li><li>You picked apps to block: in <span class="wm" role="img" aria-label="ARCO"></span>, <b>Settings → Apps to block</b>.</li><li>Your <b>subscription or trial is active</b>. When it ends, <span class="wm" role="img" aria-label="ARCO"></span> locks and stops blocking.</li></ol></div></div></details>
+  <details class="rise"><summary><span class="q">How do I add a widget, or change which habit it shows?</span></summary><div class="ans"><div><p>Touch and hold your Home Screen, tap <b>Edit → Add Widget</b>, search for <span class="wm" role="img" aria-label="ARCO"></span> and add the one you like. To change what it shows, touch and hold the widget, tap <b>Edit Widget</b>, then <b>Habit</b> (or <b>Show</b> on the Tasks widget) and pick. Step by step with pictures in the <a href="help.html#widgets">Widgets guide</a>.</p></div></div></details>
+  <details class="rise"><summary><span class="q">I'm stuck in Strict mode</span></summary><div class="ans"><div><p>That's Strict mode working: a strict session can't be ended before its timer runs out. Breaks still work (blocking pauses and comes back by itself), and every app that isn't on your block list works normally. It releases the moment the timer finishes.</p></div></div></details>
+  <details class="rise"><summary><span class="q"><span class="wm" role="img" aria-label="ARCO"></span> is locked</span></summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> locks when there's no active subscription or trial. Everything you made is still in your iCloud. Subscribe from the locked screen, or tap <b>Restore</b> if you already subscribed, for example on another iPhone.</p><p>Still locked after a purchase? Make sure you're signed in with the Apple Account that bought it, then email us your receipt and we'll sort it out.</p></div></div></details>
+  <details class="rise"><summary><span class="q">How do I cancel?</span></summary><div class="ans"><div><p>Subscriptions are managed by Apple: iPhone <b>Settings → your name → Subscriptions → <span class="wm" role="img" aria-label="ARCO"></span> → Cancel</b>. You keep access until the end of the period you paid for. Cancel during the free trial and you won't be charged.</p></div></div></details>
+  <details class="rise"><summary><span class="q">I was charged after my free trial</span></summary><div class="ans"><div><p>The 14-day trial turns into your chosen plan on day 14 unless it's cancelled before then. <span class="wm" role="img" aria-label="ARCO"></span> reminds you two days before, and shows it on Today. For a refund, ask Apple at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>. Refunds are Apple's decision, not ours.</p></div></div></details>
+  <details class="rise"><summary><span class="q">My apps are still blocked after deleting <span class="wm" role="img" aria-label="ARCO"></span></span></summary><div class="ans"><div><p>Rare, but easy to fix. Blocking is enforced by iOS itself, so a block that was running when <span class="wm" role="img" aria-label="ARCO"></span> was removed can outlive the app. Reinstall <span class="wm" role="img" aria-label="ARCO"></span> and open it once: it clears its own blocks on launch. Or go to iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span> and turn access off. Neither costs you any data.</p></div></div></details>
+  <details class="rise"><summary><span class="q">The screen time numbers look off</span></summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> shows the last 7 days from iOS Screen Time, which can differ from Apple's Monday-to-Sunday week in Settings. Screen Time also counts background audio and picture-in-picture. If one app's number is wildly different from Settings → Screen Time for the same day, email us: that's a bug we want to fix.</p></div></div></details>
+  <details class="rise"><summary><span class="q">Moving to a new iPhone</span></summary><div class="ans"><div><p>Sign in with the same Apple Account and keep iCloud on for <span class="wm" role="img" aria-label="ARCO"></span>: your plans, habits and history sync over. Give <span class="wm" role="img" aria-label="ARCO"></span> Screen Time access once on the new phone, and tap <b>Restore</b> if it asks you to subscribe.</p></div></div></details>
+  <details class="rise"><summary><span class="q">I have an idea for a feature</span></summary><div class="ans"><div><p>Please send it: <a href="mailto:support@tryarco.app">support@tryarco.app</a>. Short pitches get read fastest, and a lot of <span class="wm" role="img" aria-label="ARCO"></span> came from emails like that.</p></div></div></details>
 </main>
 
 <footer><div class="foot">

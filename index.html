@@ -415,6 +415,11 @@
     .shots.rv .phone.a { transform: rotate(-4deg) !important; } .shots.rv .phone.b { transform: rotate(4deg) !important; }
     .shots.single.rv .phone.a { transform: translateX(-50%) !important; }
   }
+
+  /* No single word left alone on a line: headings balance their lines,
+     body text avoids a one-word last line. */
+  h1, h2, h3, h4, .lede, summary { text-wrap: balance; }
+  p, li, .tip, .note { text-wrap: pretty; }
 </style>
 </head>
 <body>
