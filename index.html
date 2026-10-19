@@ -24,11 +24,31 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--fg); font: 16px/1.6 "Inter", -apple-system, system-ui, sans-serif;
+  html { background: var(--bg); }
+  body { background: transparent; color: var(--fg); font: 16px/1.6 "Inter", -apple-system, system-ui, sans-serif;
          -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
   ::selection { background: var(--gold); color: #000; }
+
+  /* ---------- aura ---------- */
+  /* Soft light drifting behind everything after the hero, so the dark page
+     never goes flat. Transforms only, so it stays cheap. */
+  .aura { position: fixed; inset: -20vh -20vw; z-index: -5; pointer-events: none; overflow: hidden; }
+  .aura i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .62; will-change: transform; }
+  .aura .a1 { width: 46vw; height: 46vw; left: 10%; top: 20%;
+              background: radial-gradient(closest-side, rgba(40,190,205,.55), transparent);
+              animation: drift1 38s ease-in-out infinite alternate; }
+  .aura .a2 { width: 40vw; height: 40vw; right: 8%; top: 45%;
+              background: radial-gradient(closest-side, rgba(255,176,32,.42), transparent);
+              animation: drift2 46s ease-in-out infinite alternate; }
+  .aura .a3 { width: 36vw; height: 36vw; left: 35%; bottom: 5%;
+              background: radial-gradient(closest-side, rgba(140,90,255,.38), transparent);
+              animation: drift3 52s ease-in-out infinite alternate; }
+  @keyframes drift1 { to { transform: translate(38vw, 22vh) scale(1.15); } }
+  @keyframes drift2 { to { transform: translate(-42vw, -26vh) scale(.9); } }
+  @keyframes drift3 { to { transform: translate(-18vw, -40vh) scale(1.2); } }
+  @media (prefers-reduced-motion: reduce) { .aura i { animation: none; } }
 
   /* ---------- nav ---------- */
   nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s, backdrop-filter .3s, border-color .3s;
@@ -55,11 +75,12 @@
   .as-badge b { font-size: 21px; font-weight: 600; letter-spacing: -.01em; margin-top: 3px; }
 
   /* ---------- hero ---------- */
-  .hero { position: relative; min-height: min(100vh, 1080px); padding: 130px 24px 0; overflow: hidden; isolation: isolate; }
+  .hero { position: relative; background: var(--bg); min-height: min(100vh, 1080px); padding: 130px 24px 0; overflow: hidden; isolation: isolate; }
   #water { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2;
            background: radial-gradient(120% 90% at 50% 0%, #1A7C8C 0%, #0D4C5C 45%, #062631 100%); }
   .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-                 background: linear-gradient(180deg, rgba(4,18,24,.15) 0%, rgba(4,18,24,0) 30%,
+                 background: radial-gradient(60% 45% at 50% 30%, rgba(2,12,16,.38), rgba(2,12,16,0) 70%),
+                             linear-gradient(180deg, rgba(4,18,24,.25) 0%, rgba(4,18,24,0) 30%,
                                              rgba(7,8,10,.35) 62%, var(--bg) 96%); }
   .hero-copy { max-width: 760px; margin: 0 auto; text-align: center; }
   .eyebrow { font-size: 11.5px; font-weight: 800; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); }
@@ -89,23 +110,23 @@
   /* ---------- metal phone frame ---------- */
   /* A thin titanium band with a black bezel inside, sized off the phone's
      own width (container units) so every size keeps iPhone proportions. */
-  .phone { container-type: inline-size; aspect-ratio: 1000 / 2125; padding: 1.25%;
-           border-radius: 16.5% / 7.8%;
+  .phone { container-type: inline-size; aspect-ratio: 1000 / 2110; padding: .6%;
+           border-radius: 16% / 7.6%;
            background:
              linear-gradient(90deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.55) 2.5%, rgba(255,255,255,0) 6%,
                              rgba(255,255,255,0) 94%, rgba(255,255,255,.45) 97.5%, rgba(255,255,255,0) 100%),
              linear-gradient(160deg, #C9CCD1 0%, #8C9198 18%, #4E535A 40%, #6B7078 60%, #A5AAB1 82%, #E2E4E7 100%);
            box-shadow: inset 0 0 0 .6px rgba(255,255,255,.7), inset 0 0 0 1.6px rgba(20,22,26,.55),
                        0 60px 100px -24px rgba(0,0,0,.7), 0 20px 44px rgba(0,0,0,.38); }
-  .phone::before, .phone::after { content: ""; position: absolute; width: 1.1%; border-radius: 2px;
+  .phone::before, .phone::after { content: ""; position: absolute; width: .8%; border-radius: 2px;
            background: linear-gradient(90deg, #5A5F66, #D3D6DA 50%, #5A5F66); }
-  .phone::before { left: -.8%; top: 19%; height: 6.5%; }
-  .phone::after  { right: -.8%; top: 25%; height: 10%; }
+  .phone::before { left: -.55%; top: 19%; height: 6.5%; }
+  .phone::after  { right: -.55%; top: 25%; height: 10%; }
   .phone .screen { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000;
-                   border: 3.4cqw solid #050506; border-radius: 15.3cqw / 15.3cqw; }
+                   border: 2.3cqw solid #050506; border-radius: 15.4cqw; }
   .phone .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top;
-                       border-radius: 12cqw; }
-  .phone .screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 12cqw;
+                       border-radius: 13.1cqw; }
+  .phone .screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 13.1cqw;
                           background: linear-gradient(125deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 30%); }
 
   /* ---------- sections ---------- */
@@ -148,17 +169,98 @@
   .all h2 { text-align: center; font-size: clamp(30px, 4.4vw, 48px); font-weight: 850; letter-spacing: -.035em;
             margin-top: 12px; }
   .all .lead { text-align: center; color: var(--muted); margin: 12px auto 0; max-width: 520px; }
-  .grid { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .tile { background: linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
-          border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
-  .tile .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
-              background: rgba(255,214,10,.1); border: 1px solid rgba(255,214,10,.2); }
-  .tile .ic svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 2;
-                  stroke-linecap: round; stroke-linejoin: round; }
-  .tile h4 { font-size: 16.5px; font-weight: 800; margin-top: 16px; letter-spacing: -.01em; }
-  .tile p { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-  @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .bento { margin-top: 52px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .b { position: relative; overflow: hidden; border-radius: 24px; padding: 26px; min-height: 250px;
+       background: linear-gradient(165deg, rgba(255,255,255,.055), rgba(255,255,255,.012) 60%), rgba(10,11,14,.55);
+       border: 1px solid var(--line); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+       display: flex; flex-direction: column; }
+  /* A spotlight that follows the pointer across the grid. */
+  .b::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+               transition: opacity .3s;
+               background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255,214,10,.10), transparent 60%); }
+  .bento:hover .b::before { opacity: 1; }
+  .b.w3 { grid-column: span 3; } .b.w2 { grid-column: span 2; }
+  .b .k { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+  .b h4 { font-size: 21px; font-weight: 800; letter-spacing: -.02em; margin-top: 8px; }
+  .b p { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; max-width: 380px; }
+  .b .vis { margin-top: auto; padding-top: 22px; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  /* alarms */
+  .alarm-big { font-size: 54px; font-weight: 850; letter-spacing: -.04em; line-height: 1;
+               background: linear-gradient(180deg, #fff, #FFE3A1); -webkit-background-clip: text; background-clip: text; color: transparent;
+               filter: drop-shadow(0 0 18px rgba(255,176,32,.35)); }
+  .line { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 18px; }
+  .line::before { content: ""; position: absolute; left: 10%; right: 10%; top: 6px; height: 2px;
+                  background: linear-gradient(90deg, rgba(255,214,10,.6), rgba(255,214,10,.15)); }
+  .line span { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+               font-size: 12.5px; font-weight: 800; color: #C9B98A; }
+  .line span::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #3A3320;
+                       box-shadow: 0 0 0 1.5px rgba(255,214,10,.6); margin-top: 2px; }
+  .line span:first-child { color: var(--gold); }
+  .line span:first-child::before { width: 13px; height: 13px; margin-top: 0; background: linear-gradient(135deg, var(--gold), var(--amber));
+                                   box-shadow: 0 0 12px rgba(255,176,32,.7); }
+
+  /* focus */
+  .focus-vis { display: flex; align-items: center; gap: 22px; }
+  .ring { position: relative; width: 132px; height: 132px; flex: none; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 28px; font-weight: 850; letter-spacing: -.03em; }
+  .ring .arc { stroke-dasharray: 340; stroke-dashoffset: 340; animation: arc 2.4s cubic-bezier(.2,.7,.2,1) forwards .3s; }
+  @keyframes arc { to { stroke-dashoffset: 100; } }
+  .chips { display: grid; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #D9D7D2;
+          padding: 7px 12px 7px 8px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
+  .chip i { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-style: normal; font-size: 11px; }
+  .chip.lock i { background: rgba(70,220,120,.15); color: #46DC78; }
+
+  /* blocked hours */
+  .day { position: relative; height: 34px; border-radius: 10px; background: rgba(255,255,255,.05); overflow: hidden; }
+  .day .blk { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(160,110,255,.45) 0 6px, rgba(160,110,255,.28) 6px 12px);
+              border-left: 1px solid rgba(190,150,255,.7); border-right: 1px solid rgba(190,150,255,.7); }
+  .day .now { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #FF5A4E; left: 62%; box-shadow: 0 0 8px #FF5A4E; }
+  .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--dim); font-weight: 700; margin-top: 8px; }
+
+  /* habits */
+  .streak { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; }
+  .streak i { aspect-ratio: 1; border-radius: 3px; background: rgba(255,255,255,.06); }
+  .streak i.on { background: linear-gradient(135deg, var(--gold), var(--amber)); box-shadow: 0 0 6px rgba(255,176,32,.35); }
+  .streak i.mid { background: rgba(255,214,10,.35); }
+  .big-n { font-size: 30px; font-weight: 850; letter-spacing: -.03em; margin-top: 12px; }
+  .big-n small { font-size: 13px; color: var(--muted); font-weight: 700; letter-spacing: 0; margin-left: 6px; }
+
+  /* insights */
+  .bars { display: flex; align-items: flex-end; gap: 7px; height: 92px; }
+  .bars i { flex: 1; border-radius: 6px 6px 3px 3px; background: rgba(255,255,255,.14); transform-origin: bottom;
+            animation: grow 1.4s cubic-bezier(.2,.7,.2,1) both; }
+  .bars i.hi { background: linear-gradient(180deg, #FF6FA0, #E2306C); box-shadow: 0 0 14px rgba(226,48,108,.45); }
+  @keyframes grow { from { transform: scaleY(.05); } }
+
+  /* widgets */
+  .minis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mini { border-radius: 14px; padding: 10px; background: rgba(255,255,255,.05); border: 1px solid var(--line); min-height: 64px; }
+  .mini .t { font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: var(--gold); }
+  .mini .row { height: 5px; border-radius: 3px; background: rgba(255,255,255,.12); margin-top: 6px; }
+  .mini .row.s { width: 60%; }
+  .mini.wide { grid-column: span 2; display: flex; align-items: center; gap: 10px; }
+  .mini.wide b { font-size: 22px; font-weight: 850; letter-spacing: -.03em; }
+
+  .b.w4 { grid-column: span 4; }
+  .b.pair { flex-direction: row; gap: 0; padding: 0; }
+  .b.pair .half { flex: 1; padding: 26px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .b.pair .half + .half { border-left: 1px solid var(--line); }
+  .b.pair h4 { margin-top: 18px; }
+  .b .ic { flex: none; width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
+                 background: rgba(255,214,10,.1); border: 1px solid rgba(255,214,10,.22); }
+  .b .ic svg { width: 21px; height: 21px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  @media (max-width: 900px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .b.w3, .b.w2 { grid-column: span 2; }
+    .b.w4 { grid-column: span 2; }
+    .b.pair { flex-direction: column; }
+    .b.pair .half + .half { border-left: 0; border-top: 1px solid var(--line); }
+  }
 
   /* ---------- closing ---------- */
   .closing { text-align: center; padding: 110px 24px 120px; position: relative; overflow: hidden; }
@@ -185,6 +287,8 @@
 </style>
 </head>
 <body>
+
+<div class="aura" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
 
 <nav id="nav"><div class="nav-in">
   <img src="icon.png" alt=""><a class="brand" href="#">ARCO</a>
@@ -321,25 +425,79 @@
     <div class="eyebrow rv" style="text-align:center">Everything in ARCO</div>
     <h2 class="rv">Built for the whole day.</h2>
     <p class="lead rv">From the first alarm to lights out.</p>
-    <div class="grid">
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M5 3 2 6M19 3l3 3"/></svg></div>
-        <h4>Wake-up alarms</h4><p>A set of alarms minutes apart, so the morning starts on time.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M7 13h4M7 17h7"/></svg></div>
-        <h4>Timed day plan</h4><p>Tasks, events and habits on one timeline with a live NOW line.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-        <h4>Blocked Hours</h4><p>Recurring windows that shut your distracting apps on their own.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
-        <h4>Focus sessions</h4><p>Start a block, apps lock, breaks are counted. Strict mode if you need it.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 12.5l4 4L19 7"/><path d="M3 20h18"/></svg></div>
-        <h4>Habits &amp; streaks</h4><p>Timers, counts and check-offs that build into streaks.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
-        <h4>Insights</h4><p>Focus, habit and screen time, week over week.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/></svg></div>
-        <h4>Widgets &amp; Live Activities</h4><p>Your day and running sessions on the home and Lock Screen.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.5-9.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9H7z"/></svg></div>
-        <h4>iCloud sync</h4><p>Everything stays in your own iCloud, on all your devices.</p></div>
-      <div class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
-        <h4>Private by design</h4><p>No account, no ads. Your plans and screen time stay yours.</p></div>
+    <div class="bento" id="bento">
+      <div class="b w3 rv">
+        <div class="k">Wake up</div>
+        <h4>Alarms that actually get you up</h4>
+        <p>A set of alarms minutes apart, every day you choose, with the sound you like.</p>
+        <div class="vis">
+          <div class="alarm-big mono">07:30</div>
+          <div class="line mono"><span>07:30</span><span>07:35</span><span>07:40</span><span>07:45</span><span>07:50</span></div>
+        </div>
+      </div>
+      <div class="b w3 rv">
+        <div class="k">Focus sessions</div>
+        <h4>Start a block. Apps lock.</h4>
+        <p>Breaks are counted, strict mode is there when you mean it, and it all shows on your Lock Screen.</p>
+        <div class="vis focus-vis">
+          <div class="ring">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
+              <circle class="arc" cx="60" cy="60" r="54" fill="none" stroke="url(#g)" stroke-width="8" stroke-linecap="round"/>
+              <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#46DC78"/><stop offset="1" stop-color="#B8F5C9"/></linearGradient></defs></svg>
+            <b class="mono">17:51</b>
+          </div>
+          <div class="chips">
+            <span class="chip lock"><i>&#9679;</i>Instagram locked</span>
+            <span class="chip lock"><i>&#9679;</i>TikTok locked</span>
+            <span class="chip"><i style="background:rgba(255,214,10,.14);color:#FFD60A">&#10074;&#10074;</i>5-min break</span>
+          </div>
+        </div>
+      </div>
+      <div class="b w2 rv">
+        <div class="k">Blocked Hours</div>
+        <h4>Blocks on a schedule</h4>
+        <p>Nights and work hours shut your apps on their own.</p>
+        <div class="vis">
+          <div class="day"><div class="blk" style="left:0;width:29%"></div><div class="blk" style="left:37%;width:21%"></div><div class="blk" style="left:91.6%;width:8.4%"></div><div class="now"></div></div>
+          <div class="ticks mono"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+        </div>
+      </div>
+      <div class="b w2 rv">
+        <div class="k">Habits &amp; streaks</div>
+        <h4>Show up every day</h4>
+        <p>Timers, counts and check-offs that build into streaks.</p>
+        <div class="vis">
+          <div class="streak" id="streak"></div>
+          <div class="big-n mono">20<small>day streak</small></div>
+        </div>
+      </div>
+      <div class="b w2 rv">
+        <div class="k">Insights</div>
+        <h4>Your week, in numbers</h4>
+        <p>Focus, habits and screen time, week over week.</p>
+        <div class="vis">
+          <div class="bars"><i style="height:45%;animation-delay:.05s"></i><i style="height:62%;animation-delay:.1s"></i><i style="height:38%;animation-delay:.15s"></i><i class="hi" style="height:92%;animation-delay:.2s"></i><i style="height:55%;animation-delay:.25s"></i><i style="height:70%;animation-delay:.3s"></i><i style="height:48%;animation-delay:.35s"></i></div>
+        </div>
+      </div>
+      <div class="b w2 rv">
+        <div class="k">Widgets</div>
+        <h4>Your day at a glance</h4>
+        <p>Timeline, tasks and habits on the home and Lock Screen.</p>
+        <div class="vis minis">
+          <div class="mini"><div class="t">TASKS</div><div class="row"></div><div class="row s"></div><div class="row"></div></div>
+          <div class="mini"><div class="t">TODAY</div><div class="row s"></div><div class="row"></div><div class="row s"></div></div>
+        </div>
+      </div>
+      <div class="b w4 pair rv">
+        <div class="half">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.5-9.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9H7z"/></svg></div>
+          <h4>iCloud sync</h4><p>Everything lives in your own iCloud, on all your devices.</p>
+        </div>
+        <div class="half">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>Private by design</h4><p>No account and no ads. Your plans and screen time stay yours.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -376,6 +534,23 @@
   }), { threshold: 0.15 });
   document.querySelectorAll(".rv").forEach(el => io.observe(el));
 
+  // Habit streak grid: the last 20 days lit, a few earlier ones half lit.
+  const streak = document.getElementById("streak");
+  if (streak) for (let i = 0; i < 42; i++) {
+    const c = document.createElement("i");
+    if (i >= 22) c.className = "on"; else if ([3, 7, 8, 12, 15, 18].includes(i)) c.className = "mid";
+    streak.appendChild(c);
+  }
+  // Spotlight that follows the pointer over the feature grid.
+  const bento = document.getElementById("bento");
+  if (bento) bento.addEventListener("pointermove", e => {
+    for (const b of bento.children) {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      b.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }
+  });
+
   // The hero's water: light moving over the floor of a pool, drawn live.
   // Slow on purpose; one still frame when the viewer prefers less motion.
   (() => {
@@ -401,12 +576,12 @@
         vec2 uv = gl_FragCoord.xy / r.y;
         float c = caustic(uv * 3.2, t) * 0.9 + caustic(uv * 5.1 + 7.3, t * 1.15) * 0.45;
         vec2 q = gl_FragCoord.xy / r;
-        vec3 deep = vec3(0.020, 0.150, 0.190);
-        vec3 pool = vec3(0.050, 0.420, 0.480);
+        vec3 deep = vec3(0.012, 0.095, 0.125);
+        vec3 pool = vec3(0.035, 0.290, 0.340);
         vec3 col = mix(deep, pool, smoothstep(0.0, 1.0, q.y) * 0.9 + 0.1);
-        col += vec3(0.62, 0.95, 1.0) * c * (0.55 + 0.45 * q.y);
+        col += vec3(0.55, 0.88, 0.95) * c * (0.30 + 0.25 * q.y);
         // A soft sun spot near the top centre.
-        col += vec3(0.25, 0.32, 0.30) * smoothstep(0.75, 0.0, distance(q, vec2(0.5, 1.05)));
+        col += vec3(0.10, 0.14, 0.13) * smoothstep(0.75, 0.0, distance(q, vec2(0.5, 1.05)));
         gl_FragColor = vec4(col, 1.0);
       }`;
     const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
