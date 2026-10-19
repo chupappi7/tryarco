@@ -95,6 +95,11 @@
   ul.steps li::before { content: ""; flex: 0 0 22px; height: 22px; border-radius: 50%; margin-top: 1px;
       background: rgba(52,209,122,.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334D17A' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/13px no-repeat;
       box-shadow: inset 0 0 0 1px rgba(52,209,122,.28); }
+  .sub { font-size: 18px; font-weight: 800; letter-spacing: -.01em; margin-top: 26px; color: #fff; }
+  .sub + .steps { margin-top: 12px; }
+  .wlist { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
+  .wlist span { font-size: 12.5px; font-weight: 700; padding: 6px 11px; border-radius: 999px; color: var(--muted);
+                background: rgba(255,255,255,.05); border: 1px solid var(--line); }
   .tip { margin-top: 20px; font-size: 14.5px; color: var(--muted); padding: 13px 16px; border-radius: 14px; max-width: 470px;
          background: rgba(255,255,255,.04); border: 1px solid var(--line); }
   @media (max-width: 860px) {
@@ -373,13 +378,20 @@
   <div class="copy">
     <div class="ghead"><div class="ic"><svg><use href="#i-widget"/></svg></div><div class="eyebrow">Widgets</div></div>
     <h2>Your day, one glance away.</h2>
-    <p>Put your timeline, habit check-offs, timers, tasks and screen time on your home screen.</p>
+    <p>Put your timeline, tasks, habits and screen time on your Home Screen. Tick tasks and habits, and start timers, right from the widget.</p>
+    <h3 class="sub">Add a widget</h3>
     <ol class="steps">
-      <li>Touch and hold an empty spot until the apps jiggle.</li>
-      <li>Tap <b>Edit → Add Widget</b>, then search for <span class="wm" role="img" aria-label="ARCO"></span>.</li>
-      <li>Swipe to pick a size, tap <b>Add Widget</b>, then <b>Done</b>.</li>
+      <li>Touch and hold an empty spot on your Home Screen until the apps jiggle.</li>
+      <li>Tap <b>Edit</b> in the top corner, then <b>Add Widget</b>, and search for <span class="wm" role="img" aria-label="ARCO"></span>.</li>
+      <li>Swipe to the widget and size you want, tap <b>Add Widget</b>, then <b>Done</b>.</li>
     </ol>
-    <p class="tip">Touch and hold a widget, then <b>Edit Widget</b>, to choose which habit or list it shows.</p>
+    <h3 class="sub">Choose what it shows</h3>
+    <ol class="steps">
+      <li>Touch and hold the widget, then tap <b>Edit Widget</b>.</li>
+      <li>On a habit widget, tap <b>Habit</b> and pick the one to track. On the Tasks widget, tap <b>Show</b> and pick the list.</li>
+      <li>Tap anywhere outside to save. Want two habits? Add the widget twice and pick a different habit on each.</li>
+    </ol>
+    <div class="wlist"><span>Timeline</span><span>Tasks</span><span>Habit</span><span>This Month</span><span>Four Weeks</span><span>Five Months</span><span>Screen time</span></div>
   </div>
   <div class="vis"><div class="pair">
     <div class="phone a"><div class="screen"><img src="assets/screens/widget-timeline.jpg" alt="The timeline widget" loading="lazy"></div></div>
@@ -431,7 +443,7 @@
     <p>Every feature, no limits: planning, habits, blocking, widgets and alarms. After the trial, one subscription keeps all of it.</p>
     <ul class="steps">
       <li><span class="wm" role="img" aria-label="ARCO"></span> reminds you two days before the trial ends.</li>
-      <li>Cancel anytime: iPhone <b>Settings → your name → Subscriptions → ARCO</b>.</li>
+      <li>Cancel anytime: iPhone <b>Settings → your name → Subscriptions → <span class="wm" role="img" aria-label="ARCO"></span></b>.</li>
       <li>Already subscribed on another device? Tap <b>Restore</b> on the subscribe screen.</li>
       <li>If it ends, <span class="wm" role="img" aria-label="ARCO"></span> locks until you subscribe again. Everything you made stays in your iCloud.</li>
     </ul>
@@ -495,7 +507,7 @@
   });
   document.querySelectorAll(".guide .copy").forEach(c => link(c, b => {
     b.querySelectorAll("h2").forEach(splitWords);
-    b.querySelectorAll(".ghead, p, .steps, .tip").forEach((el, i) => {
+    b.querySelectorAll(".ghead, p, .sub, .steps, .tip, .wlist").forEach((el, i) => {
       el.classList.add("sl-fade"); el.style.setProperty("--lag", el.matches(".ghead") ? ".05" : (.3 + i * .06).toFixed(2));
     });
   }));

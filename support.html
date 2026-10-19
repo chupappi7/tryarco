@@ -3,105 +3,159 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Support — ARCO</title>
-<meta name="description" content="ARCO support — blocking, strict mode, subscriptions, and data questions answered.">
+<title>Support · ARCO</title>
+<meta name="description" content="Get help with ARCO: blocking, Strict mode, your free trial and subscription, and moving to a new iPhone.">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..900&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: dark; --amber:#FFD60A; --bg:#0A0A0B; --card:#101012; --line:rgba(255,255,255,.09); --fg:#F2F0EB; --muted:#8E8E93; --dim:#5A5A5E; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:var(--bg); color:var(--fg); font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
-  ::selection { background:var(--amber); color:#000; }
-  nav { position:sticky; top:0; z-index:50; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); background:rgba(10,10,11,.72); border-bottom:1px solid var(--line); }
-  .nav-in { display:flex; align-items:center; gap:12px; padding:14px 24px; max-width:760px; margin:0 auto; }
-  .nav-in img { width:34px; height:34px; border-radius:8px; }
-  .nav-in .brand { font-weight:900; letter-spacing:.16em; font-size:14px; color:var(--fg); text-decoration:none; }
-  .nav-links { margin-left:auto; display:flex; gap:20px; }
-  .nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:700; transition:color .2s; }
-  .nav-links a:hover, .nav-links a.on { color:var(--fg); }
-  .wrap { max-width:760px; margin:0 auto; padding:64px 24px 90px; position:relative; }
-  .wrap::before { content:""; position:fixed; inset:-10% -10% auto; height:420px; pointer-events:none; z-index:-1;
-    background:radial-gradient(ellipse 55% 60% at 50% 0%, rgba(255,214,10,.07), transparent 70%); }
-  .eyebrow { font-size:11px; font-weight:900; letter-spacing:.24em; text-transform:uppercase; color:var(--amber); margin-bottom:12px; }
-  h1 { font-size:clamp(30px,5vw,42px); font-weight:900; letter-spacing:-1px; margin-bottom:8px; }
-  .effective { color:var(--dim); font-size:13px; margin-bottom:36px; }
-  h2 { font-size:19px; font-weight:900; margin:38px 0 10px; letter-spacing:-.3px; }
-  p, li { color:#c9c9cd; font-size:15px; }
-  p + p { margin-top: 10px; }
-  ul { padding-left:20px; margin:8px 0; }
-  a { color:var(--amber); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  .tldr { background:var(--card); box-shadow:inset 0 0 0 1px rgba(255,214,10,.3); border-radius:16px; padding:20px 22px; margin-bottom:12px; }
-  .tldr b { color:var(--amber); font-size:11px; letter-spacing:.2em; display:block; margin-bottom:6px; }
-  .card { background:var(--card); box-shadow:inset 0 0 0 1px var(--line); border-radius:16px; padding:22px; margin:14px 0; }
-  .card h3 { font-size:16px; font-weight:900; margin-bottom:6px; }
-  .btn { display:inline-block; background:var(--amber); color:#000; font-weight:900; font-size:14px; padding:12px 22px; border-radius:999px; margin-top:8px; }
-  .btn:hover { text-decoration:none; box-shadow:0 8px 28px rgba(255,214,10,.35); }
-  details { border-bottom:1px solid var(--line); }
-  summary { cursor:pointer; padding:16px 4px; font-weight:800; font-size:15px; color:var(--fg); list-style:none; display:flex; justify-content:space-between; }
-  summary::after { content:"+"; color:var(--amber); }
-  details[open] summary::after { content:"–"; }
-  details p { padding:0 4px 16px; }
-  footer { border-top:1px solid var(--line); padding:30px 24px; }
-  .foot-in { max-width:760px; margin:0 auto; display:flex; gap:18px; color:var(--dim); font-size:13px; flex-wrap:wrap; }
-  .foot-in a { color:var(--muted); }
-  .foot-in .right { margin-left:auto; }
+  :root { color-scheme: dark; --bg: #050607; --line: rgba(255,255,255,.08); --fg: #F6F4EF; --muted: #BCC0C7; --dim: #7E838C; --green: #34D17A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); scroll-behavior: smooth; scroll-padding-top: 100px; }
+  body { color: var(--fg); font: 16px/1.65 "Geist", -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: #fff; color: #000; }
+  b, strong { color: #fff; font-weight: 700; }
+  .wm { display: inline-block; height: .72em; aspect-ratio: 872 / 256; vertical-align: -.02em; background-color: currentColor;
+         -webkit-mask: url("assets/arco-wordmark.png") no-repeat center / contain; mask: url("assets/arco-wordmark.png") no-repeat center / contain; }
+
+  nav { position: fixed; inset: 0 0 auto; z-index: 50; background: rgba(5,6,7,.72); backdrop-filter: blur(18px);
+         -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+  .nav-in { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .icon { width: 42px; height: 42px; border-radius: 10px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 16px rgba(255,255,255,.35); }
+  .brand .word { height: 18px; width: auto; }
+  .nav-links { margin-left: auto; display: flex; gap: 26px; align-items: center; }
+  .nav-links a { font-size: 15.5px; font-weight: 600; color: rgba(255,255,255,.72); transition: color .2s; }
+  .nav-links a:hover, .nav-links a.on { color: #fff; }
+  .nav-get { background: #000; color: #fff !important; padding: 9px 17px; border-radius: 999px; font-weight: 700 !important;
+             box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 16px rgba(255,255,255,.35); }
+  @media (max-width: 640px) { .nav-links a:not(.nav-get) { display: none; } }
+
+  .eyebrow { font-size: clamp(13px, 1.3vw, 16px); font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: #fff;
+             text-shadow: 0 0 10px rgba(255,255,255,.75), 0 0 26px rgba(205,220,255,.38); }
+  .eyebrow .wm { height: .82em; margin: 0 .3em 0 .05em; background: #fff; filter: drop-shadow(0 0 8px rgba(255,255,255,.7)); }
+
+  .hero { position: relative; text-align: center; padding: 160px 24px 46px; }
+  .hero::before { content: ""; position: absolute; left: 50%; top: 40px; width: 900px; max-width: 100vw; height: 480px; transform: translateX(-50%);
+                  z-index: -1; background: radial-gradient(closest-side, var(--glow, rgba(150,120,255,.16)), transparent); filter: blur(12px); }
+  h1 { font-size: clamp(40px, 6.2vw, 68px); line-height: 1.03; font-weight: 800; letter-spacing: -.045em; margin-top: 18px; }
+  .lede { color: var(--muted); font-size: 18px; margin: 16px auto 0; max-width: 540px; }
+  .date { color: var(--dim); font-size: 14px; font-weight: 600; margin-top: 12px; }
+  .col { max-width: 760px; margin: 0 auto; padding: 0 24px 110px; }
+
+  .card { border-radius: 24px; padding: 28px; background: linear-gradient(165deg, rgba(255,255,255,.06), rgba(255,255,255,.015) 60%), #0E1014;
+          border: 1px solid var(--line); box-shadow: 0 30px 70px -24px rgba(0,0,0,.6); }
+  .tldr { margin-bottom: 46px; }
+  .tldr .eyebrow { font-size: 12px; }
+  .tldr p { color: #E6E4DF; margin-top: 10px; font-size: 16.5px; }
+
+  .legal h2 { font-size: 23px; font-weight: 800; letter-spacing: -.02em; margin: 44px 0 10px; display: flex; gap: 12px; align-items: baseline; }
+  .legal h2 span { color: var(--dim); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .legal p, .legal li { color: var(--muted); font-size: 16px; }
+  .legal p + p { margin-top: 10px; }
+  .legal ul { list-style: none; margin: 12px 0; display: grid; gap: 10px; }
+  .legal ul li { position: relative; padding-left: 34px; }
+  .legal ul li::before { content: ""; position: absolute; left: 0; top: 2px; width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(52,209,122,.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334D17A' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/13px no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(52,209,122,.28); }
+  .legal a, .faq a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.3); }
+
+  .contact { display: flex; gap: 22px; align-items: center; justify-content: space-between; }
+  .contact h2 { font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
+  .contact p { color: var(--muted); margin-top: 6px; }
+  .btn { flex: none; background: #000; color: #fff; font-weight: 800; padding: 14px 22px; border-radius: 999px;
+         box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 18px rgba(255,255,255,.3); transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0 54px; }
+  .quick a { border-radius: 18px; padding: 16px 18px; background: #0E1014; border: 1px solid var(--line); font-weight: 700; font-size: 14.5px;
+             transition: border-color .2s, transform .2s; }
+  .quick a span { display: block; color: var(--dim); font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .quick a:hover { border-color: rgba(255,255,255,.2); transform: translateY(-2px); }
+  @media (max-width: 640px) { .contact { flex-direction: column; align-items: flex-start; } .quick { grid-template-columns: 1fr; } }
+
+  .faq h2.sec { font-size: 13px; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { list-style: none; cursor: pointer; padding: 20px 4px; display: flex; justify-content: space-between; gap: 16px;
+                 font-size: 17.5px; font-weight: 700; color: #fff; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: 24px; height: 24px; border-radius: 50%; margin-top: 1px;
+                        background: rgba(255,255,255,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center/12px no-repeat;
+                        transition: transform .3s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  .faq details[open] .ans { grid-template-rows: 1fr; }
+  .faq .ans > div { overflow: hidden; color: var(--muted); padding: 0 4px; }
+  .faq details[open] .ans > div { padding-bottom: 20px; }
+  .faq .ans p + p, .faq .ans ol { margin-top: 8px; }
+  .faq ol { padding-left: 20px; display: grid; gap: 6px; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 24px 46px; }
+  .foot { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; font-size: 13.5px; color: var(--dim); }
+  .foot a { color: var(--muted); } .foot a:hover { color: #fff; }
+  .foot .right { margin-left: auto; }
+
+  .rise { opacity: 0; transform: translateY(24px); filter: blur(4px); transition: opacity .9s ease, transform 1s cubic-bezier(.16,.8,.2,1), filter .9s ease; }
+  .rise.in { opacity: 1; transform: none; filter: none; }
+  @media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; filter: none; transition: none; } .faq .ans { transition: none; } }
 </style>
 </head>
 <body>
 <nav><div class="nav-in">
-  <img src="icon.png" alt="ARCO"><a class="brand" href="index.html">ARCO</a>
+  <a class="brand" href="index.html" aria-label="ARCO home"><img class="icon" src="icon.png" alt=""><img class="word" src="assets/arco-wordmark.png" alt="ARCO"></a>
   <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#ai">MCP</a>
     <a href="help.html">Guides</a>
     <a href="support.html" class="on">Support</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
+    <a class="nav-get" href="https://apps.apple.com/app/id6761037446">Get <span class="wm" role="img" aria-label="ARCO"></span></a>
   </div>
 </div></nav>
-<div class="wrap">
 
-<div class="eyebrow">Help</div>
-<h1>Support</h1>
-<p class="effective">Usually answered within 24 hours.</p>
+<header class="hero" style="--glow: rgba(127,227,236,.16)">
+  <div class="eyebrow rise">Support</div>
+  <h1 class="rise">We're here<br>to help.</h1>
+  <p class="lede rise">Usually answered within 24 hours, by the person who builds the app.</p>
+</header>
+<main class="col faq">
+  <div class="card contact rise">
+    <div><h2>Write to us</h2><p>support@tryarco.app, or in the app: <b>Settings → Feedback &amp; bugs</b>.</p></div>
+    <a class="btn" href="mailto:support@tryarco.app">Email support</a>
+  </div>
+  <div class="quick">
+    <a class="rise" href="help.html">Guides<span>How every feature works</span></a>
+    <a class="rise" href="help.html#subscription">Free trial<span>Trial, cancel, restore</span></a>
+    <a class="rise" href="privacy.html">Privacy<span>What stays on your phone</span></a>
+  </div>
+  <h2 class="eyebrow sec rise">Common questions</h2>
+  <details class="rise"><summary>Blocking isn't working</summary><div class="ans"><div><p>Check three things:</p><ol><li><b>Screen Time access</b> is on: iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span>.</li><li>You picked apps to block: in <span class="wm" role="img" aria-label="ARCO"></span>, <b>Settings → Apps to block</b>.</li><li>Your <b>subscription or trial is active</b>. When it ends, <span class="wm" role="img" aria-label="ARCO"></span> locks and stops blocking.</li></ol></div></div></details>
+  <details class="rise"><summary>How do I add a widget, or change which habit it shows?</summary><div class="ans"><div><p>Touch and hold your Home Screen, tap <b>Edit → Add Widget</b>, search for <span class="wm" role="img" aria-label="ARCO"></span> and add the one you like. To change what it shows, touch and hold the widget, tap <b>Edit Widget</b>, then <b>Habit</b> (or <b>Show</b> on the Tasks widget) and pick. Step by step with pictures in the <a href="help.html#widgets">Widgets guide</a>.</p></div></div></details>
+  <details class="rise"><summary>I'm stuck in Strict mode</summary><div class="ans"><div><p>That's Strict mode working: a strict session can't be ended before its timer runs out. Breaks still work (blocking pauses and comes back by itself), and every app that isn't on your block list works normally. It releases the moment the timer finishes.</p></div></div></details>
+  <details class="rise"><summary><span class="wm" role="img" aria-label="ARCO"></span> is locked</summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> locks when there's no active subscription or trial. Everything you made is still in your iCloud. Subscribe from the locked screen, or tap <b>Restore</b> if you already subscribed, for example on another iPhone.</p><p>Still locked after a purchase? Make sure you're signed in with the Apple Account that bought it, then email us your receipt and we'll sort it out.</p></div></div></details>
+  <details class="rise"><summary>How do I cancel?</summary><div class="ans"><div><p>Subscriptions are managed by Apple: iPhone <b>Settings → your name → Subscriptions → <span class="wm" role="img" aria-label="ARCO"></span> → Cancel</b>. You keep access until the end of the period you paid for. Cancel during the free trial and you won't be charged.</p></div></div></details>
+  <details class="rise"><summary>I was charged after my free trial</summary><div class="ans"><div><p>The 14-day trial turns into your chosen plan on day 14 unless it's cancelled before then. <span class="wm" role="img" aria-label="ARCO"></span> reminds you two days before, and shows it on Today. For a refund, ask Apple at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>. Refunds are Apple's decision, not ours.</p></div></div></details>
+  <details class="rise"><summary>My apps are still blocked after deleting <span class="wm" role="img" aria-label="ARCO"></span></summary><div class="ans"><div><p>Rare, but easy to fix. Blocking is enforced by iOS itself, so a block that was running when <span class="wm" role="img" aria-label="ARCO"></span> was removed can outlive the app. Reinstall <span class="wm" role="img" aria-label="ARCO"></span> and open it once: it clears its own blocks on launch. Or go to iPhone Settings → Screen Time → Apps with Screen Time Access → <span class="wm" role="img" aria-label="ARCO"></span> and turn access off. Neither costs you any data.</p></div></div></details>
+  <details class="rise"><summary>The screen time numbers look off</summary><div class="ans"><div><p><span class="wm" role="img" aria-label="ARCO"></span> shows the last 7 days from iOS Screen Time, which can differ from Apple's Monday-to-Sunday week in Settings. Screen Time also counts background audio and picture-in-picture. If one app's number is wildly different from Settings → Screen Time for the same day, email us: that's a bug we want to fix.</p></div></div></details>
+  <details class="rise"><summary>Moving to a new iPhone</summary><div class="ans"><div><p>Sign in with the same Apple Account and keep iCloud on for <span class="wm" role="img" aria-label="ARCO"></span>: your plans, habits and history sync over. Give <span class="wm" role="img" aria-label="ARCO"></span> Screen Time access once on the new phone, and tap <b>Restore</b> if it asks you to subscribe.</p></div></div></details>
+  <details class="rise"><summary>I have an idea for a feature</summary><div class="ans"><div><p>Please send it: <a href="mailto:support@tryarco.app">support@tryarco.app</a>. Short pitches get read fastest, and a lot of <span class="wm" role="img" aria-label="ARCO"></span> came from emails like that.</p></div></div></details>
+</main>
 
-<div class="card">
-  <h3>Email support</h3>
-  <p>Fastest way to reach a human (it's just one human — the developer).</p>
-  <a class="btn" href="mailto:thinht7110@gmail.com?subject=ARCO%20support">Email thinht7110@gmail.com</a>
-</div>
-
-<h2>Common questions</h2>
-
-<details><summary>Blocking isn't working</summary>
-<p>Three things to check: (1) Screen Time permission is granted — Settings → Screen Time → Apps with Screen Time Access → ARCO. (2) You've picked apps to block — Settings tab → Apps to block. (3) App blocking is an ARCO Pro feature — on the free plan the focus timer runs but apps stay open, and the session screen says "BLOCKING OFF" so you always know.</p></details>
-
-<details><summary>I'm stuck in Strict mode</summary>
-<p>Working as designed — a strict session cannot be ended before its timer runs out. Breaks still work (blocking pauses and re-arms automatically), and every app that isn't on your block list works normally. The lock releases the moment the timer finishes; the longest possible session is 90 minutes.</p></details>
-
-<details><summary>My apps are still blocked after deleting ARCO</summary>
-<p>Rare, but recoverable. App blocking is enforced by iOS itself, so a block that was running when ARCO was removed can outlive the app. Fastest fix: reinstall ARCO and open it once — it clears any block it owns on launch. If you'd rather not reinstall, go to Settings → Screen Time → Apps with Screen Time Access → ARCO and turn access off, which releases everything. Neither step costs you any data.</p></details>
-
-<details><summary>My purchase didn't unlock Pro</summary>
-<p>Open any upgrade screen and tap <b>Restore</b>. If that doesn't do it, confirm you're signed into the same Apple ID that made the purchase, then email us with your purchase receipt and we'll sort it.</p></details>
-
-<details><summary>How do I cancel my subscription?</summary>
-<p>Subscriptions are managed by Apple: Settings → your name → Subscriptions → ARCO → Cancel. Pro stays active until the end of the paid period. No email, no hoops.</p></details>
-
-<details><summary>The usage numbers look wrong</summary>
-<p>ARCO shows a rolling last-7-days window read from iOS Screen Time, which can differ from Apple's Mon–Sun calendar week in Settings. Screen Time also counts background audio and picture-in-picture as usage. If a specific app's number differs wildly from Settings → Screen Time for the same day, email us — that's a bug we want.</p></details>
-
-<details><summary>Can I move my data to a new iPhone?</summary>
-<p>Yes — ARCO's data is included in your iPhone backup. Restore the new phone from backup and your habits, history, and settings come along. Screen Time permission needs to be granted once on the new device.</p></details>
-
-<details><summary>Feature request?</summary>
-<p>Genuinely wanted: <a href="mailto:thinht7110@gmail.com?subject=ARCO%20feature%20request">email the developer</a>. Short pitches read fastest.</p></details>
-</div>
-<footer><div class="foot-in">
-  <a href="index.html">ARCO</a>
+<footer><div class="foot">
+  <span>© 2026 <span class="wm" role="img" aria-label="ARCO"></span></span>
+  <a href="index.html">Home</a>
+  <a href="help.html">Guides</a>
   <a href="support.html">Support</a>
   <a href="privacy.html">Privacy</a>
   <a href="terms.html">Terms</a>
-  <span class="right">© 2026 ARCO · Made by Thinh Tran</span>
+  <a class="right" href="mailto:support@tryarco.app">support@tryarco.app</a>
 </div></footer>
+<script>
+  // Sections rise in as they come into view.
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+                                      { threshold: 0.08 });
+  document.querySelectorAll(".rise").forEach(el => io.observe(el));
+</script>
 </body>
 </html>
