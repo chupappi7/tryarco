@@ -337,6 +337,13 @@
   .term .you { color: #fff; } .term .you::before { content: "› "; color: var(--gold); }
   .term .ai { color: #A9ADB5; } .term .tool { color: #7FE3EC; } .term .ok { color: #46DC78; }
   .term .dim { color: #5E626A; }
+  /* The input box Claude Code waits in: a prompt between two rules, blinking caret. */
+  .term .input { margin-top: 16px; padding: 7px 0; border-top: 1px solid rgba(255,255,255,.22);
+                 border-bottom: 1px solid rgba(255,255,255,.22); display: flex; align-items: center; gap: 10px; }
+  .term .input::before { content: "›"; color: #fff; font-weight: 700; }
+  .term .caret { display: inline-block; width: .62em; height: 1.2em; border: 1.5px solid #C9CDD4; border-radius: 1px;
+                 animation: caret 1.05s steps(1) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
   @media (max-width: 900px) {
     .agents .wrap { grid-template-columns: 1fr; }
     .can { grid-template-columns: 1fr; }
@@ -657,6 +664,7 @@ Reply to Anna, and Gym at 18:00.</div>
         <div class="ln ok" style="transition-delay:3.6s">✓ Gym done today · 21-day streak</div>
         <div class="ln tool" style="transition-delay:4.1s">  arco · add_task</div>
         <div class="ln ok" style="transition-delay:4.4s">+ Added "Test paywall on iPad" for tomorrow</div>
+        <div class="ln input" style="transition-delay:4.9s"><span class="caret"></span></div>
       </div>
     </div>
   </div>
