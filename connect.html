@@ -97,6 +97,8 @@
   .can li::before { content:"✓"; color:#0b0c0e; background:linear-gradient(135deg,var(--g1),var(--g2)); }
   .cant li::before { content:"–"; color:var(--muted); background:rgba(255,255,255,.08); }
   .card b { color:#fff; font-weight:650; }
+  .why p { color:var(--muted); font-size:15px; text-wrap:pretty; }
+  .why p + p { margin-top:8px; }
 
   .go { position:relative; display:flex; align-items:center; justify-content:center; gap:10px; width:100%; margin-top:26px; padding:16px; border-radius:16px;
         font:700 17px "Geist",system-ui,sans-serif; color:#000; background:#fff; text-decoration:none; cursor:pointer;
@@ -132,6 +134,12 @@
       <div class="node"><div class="b"><svg viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.6 1.5A3.75 3.75 0 0 1 17.5 18Z"/></svg></div>Your iCloud</div>
       <div class="wire"></div>
       <div class="node"><div class="b"><img src="icon.png" alt=""></div>ARCO on iPhone</div>
+    </div>
+
+    <div class="card why">
+      <h2>Why Apple?</h2>
+      <p>ARCO has no accounts and no servers. Your tasks and habits live in <b>your own iCloud</b>, which is how they sync between your iPhone and other devices.</p>
+      <p>Signing in with Apple is how your agent reaches that same iCloud copy, the way iCloud.com does in a browser.</p>
     </div>
 
     <div class="card can">
