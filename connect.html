@@ -18,11 +18,30 @@
   // the one it started. A link to this page made by anyone else has no secret
   // in this tab, so it goes nowhere. Nothing is stored past that, and no other
   // scripts load.
+  //
+  // ARCO's hosted MCP server starts here too, with its own address in place of
+  // a port. Its consent page has already asked, so this goes straight on to
+  // Apple, and the token goes back to that server, which checks the state
+  // against a cookie in the same browser. Only ARCO's own servers are allowed.
   (function () {
     var KEY = "arco-login";
+    var HOSTED = ["https://mcp.tryarco.app", "https://mcp-dev.tryarco.app"];
     var root = document.documentElement;
     var hash = new URLSearchParams(location.hash.slice(1));
     var next = hash.get("next");
+    var toApple = function (href) {
+      try { var u = new URL(href); } catch (e) { return null; }
+      return u.protocol === "https:" && u.hostname === "idmsa.apple.com" && u.pathname.indexOf("/IDMSWebAuth/") === 0 ? u : null;
+    };
+    if (next && hash.get("hosted")) {
+      var apple = toApple(next);
+      if (!apple || HOSTED.indexOf(hash.get("hosted")) < 0 || !/^[\w-]{16,256}$/.test(hash.get("state") || "")) return;
+      sessionStorage.setItem(KEY, JSON.stringify({ hosted: hash.get("hosted"), state: hash.get("state") }));
+      history.replaceState(null, "", location.pathname);
+      root.setAttribute("data-view", "finishing");
+      location.replace(apple.href);
+      return;
+    }
     if (next && hash.get("state") && /^\d+$/.test(hash.get("port") || "")) {
       var to;
       try { to = new URL(next); } catch (e) { return; }
@@ -54,9 +73,9 @@
       return;
     }
     root.setAttribute("data-view", "finishing");
+    var back = start.hosted && HOSTED.indexOf(start.hosted) >= 0 ? start.hosted : "http://127.0.0.1:" + start.port;
     location.replace(
-      "http://127.0.0.1:" + start.port + "/callback?ckWebAuthToken=" + encodeURIComponent(token) +
-        "&state=" + encodeURIComponent(start.state),
+      back + "/callback?ckWebAuthToken=" + encodeURIComponent(token) + "&state=" + encodeURIComponent(start.state),
     );
   })();
 </script>
