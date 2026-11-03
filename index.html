@@ -430,6 +430,26 @@
      body text avoids a one-word last line. */
   h1, h2, h3, h4, .lede, summary { text-wrap: balance; }
   p, li, .tip, .note { text-wrap: pretty; }
+  .quick { grid-column: 1 / -1; padding: 28px; border-radius: 22px; background: rgba(255,255,255,.035); border: 1px solid var(--line); }
+  .quick h3 { font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+  .quick ol { list-style: none; counter-reset: q; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.25fr; gap: 24px; margin-top: 20px; }
+  .quick li { counter-increment: q; display: flex; flex-direction: column; gap: 8px; min-width: 0; font-size: 14.5px; color: var(--muted); }
+  .quick li::before { content: counter(q); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 800;
+                      color: #0B0C0F; background: linear-gradient(135deg, var(--gold), var(--amber)); }
+  .quick li > b { color: var(--fg); font-size: 15.5px; }
+  .quick code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--fg); background: rgba(255,255,255,.07); padding: 1px 6px; border-radius: 6px; }
+  .quick pre { position: relative; font: 12.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--teal); white-space: pre-wrap; word-break: break-all;
+               padding: 12px 12px 40px; border-radius: 12px; background: #0A0C10; border: 1px solid rgba(255,255,255,.1); }
+  .qcopy { position: absolute; right: 8px; bottom: 8px; font: 700 12px/1 "Geist", system-ui, sans-serif; color: #0B0C0F; background: var(--gold);
+           border: 0; border-radius: 8px; padding: 7px 11px; cursor: pointer; }
+  .quick .qask { list-style: none; display: grid; gap: 6px; }
+  .quick .qask li { display: block; color: #D9D7D2; font-size: 14px; }
+  .quick .qask li::before { content: none; }
+  .qnote { margin-top: 22px; font-size: 14px; color: var(--dim); }
+  .qnote a { color: var(--fg); font-weight: 700; border-bottom: 1px solid rgba(255,255,255,.3); }
+  @media (max-width: 900px) { .quick ol { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .quick { padding: 22px 18px; } .quick ol { grid-template-columns: 1fr; } }
+  .mcp-more { display: inline-block; margin-top: 22px; font-weight: 700; color: #fff; border-bottom: 1px solid rgba(255,255,255,.3); }
 </style>
 </head>
 <body>
@@ -438,7 +458,7 @@
   <img src="icon.png" alt=""><a class="brand" href="#" aria-label="ARCO"><img src="assets/arco-wordmark.png" alt="ARCO"></a>
   <div class="nav-links">
     <a href="#features">Features</a>
-    <a href="#ai">MCP</a>
+    <a href="mcp.html">MCP</a>
     <a href="help.html">How it works</a>
     <a href="guides/">Guides</a>
     <a href="support.html">Support</a>
@@ -671,7 +691,7 @@
 <section class="agents" id="ai">
   <div class="wrap">
     <div class="copy rv">
-      <span class="soon">Coming soon</span>
+      <span class="soon">New</span>
       <h2>Your AI agent,<br>working from your plan.</h2>
       <p>Connect <span class="wm" role="img" aria-label="ARCO"></span> to the AI agent you already use. It sees what's on your day, plans it in time blocks, checks off tasks and habits when they're done, and adds follow-ups as they come up. You open <span class="wm" role="img" aria-label="ARCO"></span> and it's all there.</p>
       <div class="works">Works with</div>
@@ -689,6 +709,7 @@
         <li><b>✓</b>Move tasks to another day</li>
         <li><b>✓</b>See your Blocked Hours</li>
       </ul>
+      <a class="mcp-more" href="mcp.html">Setup guide and every tool →</a>
     </div>
     <div class="term rv" id="term" aria-label="Example of an AI agent using ARCO">
       <div class="bar"><i></i><i></i><i></i><span>Claude Code · arco</span></div>
@@ -708,6 +729,29 @@ Thursday's exam, Call mom, and Gym at 18:00.</div>
         <div class="ln ok" style="transition-delay:4.4s">+ Added "Follow up with the client" for Friday</div>
         <div class="ln input" style="transition-delay:4.9s"><span class="caret"></span></div>
       </div>
+    </div>
+
+    <div class="quick rv">
+      <h3>Set it up in a minute</h3>
+      <ol>
+        <li>
+          <b>Paste this in your terminal.</b>
+          <pre id="qcmd">claude mcp add -s user -t http arco https://mcp.tryarco.app/mcp<button class="qcopy" type="button" data-copy="qcmd">Copy</button></pre>
+        </li>
+        <li>
+          <b>Authenticate.</b>
+          <span>Start Claude Code, type <code>/mcp</code>, pick <code>arco</code> and choose <b>Authenticate</b>.</span>
+        </li>
+        <li>
+          <b>Sign in with Apple.</b>
+          <span>Use the Apple Account your iPhone uses for iCloud. That's where ARCO keeps your plan.</span>
+        </li>
+        <li>
+          <b>Then just ask.</b>
+          <ul class="qask"><li>"What's on my plate today?"</li><li>"Plan my afternoon, hardest thing first."</li><li>"Proposal's sent. Check it off, follow up Friday."</li><li>"Push what I didn't finish to tomorrow."</li></ul>
+        </li>
+      </ol>
+      <p class="qnote">Needs ARCO Premium on iPhone. Using Claude, ChatGPT, Cursor or Codex? <a href="mcp.html#setup">Steps for each app →</a></p>
     </div>
   </div>
 </section>
@@ -936,6 +980,13 @@ nav.mm-open .mm-btn i:nth-child(3){transform:translateY(-5.75px) rotate(-45deg)}
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') set(false); });
   addEventListener('resize',function(){ if(innerWidth>640) set(false); });
 })();
+</script>
+<script>
+document.querySelectorAll(".qcopy").forEach(b => b.addEventListener("click", () => {
+  const pre = document.getElementById(b.dataset.copy);
+  const text = [...pre.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join("").trim();
+  navigator.clipboard.writeText(text).then(() => { b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy"), 1600); });
+}));
 </script>
 </body>
 </html>

@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARCO MCP · ARCO</title>
+<meta name="description" content="Connect ARCO to Claude Code, Claude, ChatGPT, Cursor or Codex with one URL. Setup, every tool and its parameters, and how sign-in keeps your data private.">
+<link rel="canonical" href="https://tryarco.app/mcp.html">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..900&family=Geist+Mono:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; --bg: #050607; --line: rgba(255,255,255,.08); --fg: #F6F4EF; --muted: #BCC0C7; --dim: #7E838C;
+          --card: #0C0E12; --g1: #7FE3EC; --g2: #A58BFF; --g3: #FF8FD0; --grad: linear-gradient(90deg, var(--g1), var(--g2), var(--g3)); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body { color: var(--fg); font: 16px/1.65 "Geist", -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  b { color: #fff; font-weight: 700; }
+  .wm { display: inline-block; height: .72em; aspect-ratio: 872 / 256; vertical-align: -.02em; background-color: currentColor;
+        -webkit-mask: url("assets/arco-wordmark.png") no-repeat center / contain; mask: url("assets/arco-wordmark.png") no-repeat center / contain; }
+
+  nav { position: fixed; inset: 0 0 auto; z-index: 50; background: rgba(5,6,7,.72); backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+  .nav-in { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+  .nav-in > a > img.icon { width: 42px; height: 42px; border-radius: 10px;
+                           box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 16px rgba(255,255,255,.35); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { display: block; }
+  .brand .word { height: 18px; width: auto; }
+  .nav-links { margin-left: auto; display: flex; gap: 26px; align-items: center; }
+  .nav-links a { font-size: 15.5px; font-weight: 600; color: rgba(255,255,255,.72); transition: color .2s; }
+  .nav-links a:hover, .nav-links a.on { color: #fff; }
+  .nav-get { background: #000; color: #fff !important; padding: 9px 17px; border-radius: 999px; font-weight: 700 !important;
+             box-shadow: 0 0 0 1.5px rgba(255,255,255,.85), 0 0 16px rgba(255,255,255,.35); }
+  @media (max-width: 640px) { .nav-links a:not(.nav-get) { display: none; } }
+
+  .eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: #fff;
+             text-shadow: 0 0 10px rgba(255,255,255,.75), 0 0 26px rgba(205,220,255,.38); }
+
+  .hero { text-align: center; padding: 150px 24px 30px; position: relative; }
+  .hero::before { content: ""; position: absolute; left: 50%; top: 40px; width: 900px; max-width: 160vw; height: 520px; transform: translateX(-50%); z-index: -1;
+                  background: radial-gradient(closest-side, rgba(165,139,255,.15), rgba(127,227,236,.06) 60%, transparent); filter: blur(10px); }
+  h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.04; font-weight: 800; letter-spacing: -.045em; margin-top: 16px; }
+  .lede { color: var(--muted); font-size: 18px; margin: 16px auto 0; max-width: 580px; text-wrap: pretty; }
+  .note { display: inline-flex; gap: 8px; align-items: center; margin-top: 22px; padding: 7px 14px; border-radius: 999px; font-size: 13.5px; font-weight: 600;
+          color: var(--muted); background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--line); }
+  .note i { width: 7px; height: 7px; border-radius: 50%; background: var(--g2); box-shadow: 0 0 10px var(--g2); }
+
+  .layout { max-width: 1080px; margin: 0 auto; padding: 30px 24px 90px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; }
+  .toc { position: sticky; top: 100px; align-self: start; font-size: 14px; }
+  .toc b { display: block; font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+  .toc a { display: block; padding: 5px 0 5px 14px; color: var(--dim); border-left: 1px solid var(--line); transition: color .2s; }
+  .toc a:hover { color: #fff; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; gap: 0; } .toc { display: none; } }
+
+  article { min-width: 0; }
+  article section { padding-top: 34px; }
+  article section + section { margin-top: 26px; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(26px, 3.2vw, 34px); line-height: 1.12; font-weight: 800; letter-spacing: -.035em; position: relative; padding-top: 16px; }
+  h2::before { content: ""; position: absolute; left: 0; top: 0; width: 28px; height: 3px; border-radius: 3px; background: var(--grad); }
+  h3 { font-size: 18px; font-weight: 750; letter-spacing: -.015em; margin-top: 28px; }
+  article p { color: var(--muted); margin-top: 12px; text-wrap: pretty; }
+  article p a, article li a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.3); }
+  article ul, article ol { margin-top: 12px; padding-left: 0; list-style: none; display: grid; gap: 8px; }
+  article ul > li { position: relative; padding-left: 22px; color: var(--muted); }
+  article ul > li::before { content: ""; position: absolute; left: 3px; top: .72em; width: 7px; height: 7px; border-radius: 50%; background: var(--grad); }
+  article ol { counter-reset: n; }
+  article ol > li { counter-increment: n; position: relative; padding-left: 40px; color: var(--muted); min-height: 28px; }
+  article ol > li::before { content: counter(n); position: absolute; left: 0; top: 0; width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
+       font-size: 13.5px; font-weight: 800; color: #fff; background: #0E1014; box-shadow: inset 0 0 0 1.5px rgba(165,139,255,.55), 0 0 14px rgba(165,139,255,.18); }
+
+  code { font: 500 .88em "Geist Mono", ui-monospace, Menlo, monospace; background: #10131A; box-shadow: inset 0 0 0 1px var(--line); border-radius: 6px; padding: 2px 6px; color: #fff; }
+  pre { position: relative; margin-top: 14px; padding: 16px 18px; border-radius: 14px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line);
+        overflow-x: auto; font: 13.5px/1.65 "Geist Mono", ui-monospace, Menlo, monospace; color: #E8E9EC; }
+  pre code { background: none; box-shadow: none; padding: 0; font-size: inherit; }
+  pre .c { color: var(--dim); }
+  .copy { position: absolute; top: 10px; right: 10px; font: 700 12px "Geist", system-ui; color: var(--muted); background: #171A21; border: 0; cursor: pointer;
+          padding: 6px 10px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--line); transition: color .2s; }
+  .copy:hover { color: #fff; }
+  .prompt { background: linear-gradient(135deg, rgba(127,227,236,.07), rgba(165,139,255,.06) 60%, rgba(255,143,208,.04)), var(--card);
+            box-shadow: inset 0 0 0 1px rgba(165,139,255,.28), 0 0 40px rgba(165,139,255,.08); white-space: pre-wrap; font-family: "Geist", system-ui; font-size: 15px; padding-right: 80px; }
+
+  .tools { margin-top: 18px; display: grid; gap: 10px; }
+  .tool { padding: 16px 18px; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+  .tool .h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+  .tool .h code { font-size: 15px; font-weight: 700; background: none; box-shadow: none; padding: 0; }
+  .tag { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; }
+  .tag.r { color: var(--g1); background: rgba(127,227,236,.1); }
+  .tag.w { color: var(--g2); background: rgba(165,139,255,.12); }
+  .tag.d { color: #ff9a9a; background: rgba(255,120,120,.1); }
+  .tool p { margin-top: 6px; font-size: 15px; }
+  .params { margin-top: 10px; display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: 14px; }
+  .params dt code { font-size: 13px; }
+  .params dt i { font-style: normal; color: var(--dim); font-size: 12px; margin-left: 4px; }
+  .params dd { color: var(--muted); }
+  @media (max-width: 560px) { .params { grid-template-columns: 1fr; gap: 2px; } .params dd { margin-bottom: 8px; } }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  .card { padding: 16px 18px; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+  .card h4 { font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+  .card ul { margin-top: 10px; }
+  .card p { margin-top: 8px; font-size: 15px; }
+
+  .connect { margin-top: 18px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px rgba(165,139,255,.28), 0 0 40px rgba(165,139,255,.08); padding: 18px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tabs button { font: 650 13.5px "Geist", system-ui; color: var(--muted); background: rgba(255,255,255,.04); border: 0; cursor: pointer;
+                 padding: 7px 13px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); transition: color .2s, background .2s; }
+  .tabs button:hover { color: #fff; }
+  .tabs button[aria-selected="true"] { color: #07080a; background: var(--fg); box-shadow: none; }
+  .pane { margin-top: 14px; }
+  .pane[hidden] { display: none; }
+  .pane > p:first-child { margin-top: 0; }
+  .pane pre { padding-right: 80px; white-space: pre-wrap; word-break: break-all; }
+  .pane ol { margin-top: 14px; }
+  .url { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px; font-size: 14.5px; color: var(--muted); }
+  .faq dt { color: #fff; font-weight: 700; margin-top: 20px; }
+  .faq dd { color: var(--muted); margin-top: 4px; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 24px 46px; }
+  .foot { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; font-size: 13.5px; color: var(--dim); }
+  .foot a { color: var(--muted); } .foot a:hover { color: #fff; }
+  .foot .right { margin-left: auto; }
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a class="brand" href="index.html" aria-label="ARCO home"><img class="icon" src="icon.png" alt=""><img class="word" src="assets/arco-wordmark.png" alt="ARCO"></a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="mcp.html" class="on">MCP</a>
+    <a href="help.html">How it works</a>
+    <a href="guides/">Guides</a>
+    <a href="support.html">Support</a>
+    <a class="nav-get" href="https://apps.apple.com/app/id6761037446">Get <span class="wm" role="img" aria-label="ARCO"></span></a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="eyebrow">ARCO MCP</div>
+  <h1>Your AI agent,<br>working from your plan.</h1>
+  <p class="lede">Connect ARCO to Claude Code, Claude, ChatGPT, Cursor or Codex with one URL. It reads your day, plans it in time blocks, checks things off and adds follow-ups, straight to your iPhone.</p>
+  <div class="note"><i></i>Part of ARCO Premium · needs ARCO 2.1.3 or later</div>
+</header>
+
+<div class="layout">
+  <aside class="toc" aria-label="On this page">
+    <b>On this page</b>
+    <a href="#setup">Set up</a>
+    <a href="#ask">What to ask</a>
+    <a href="#tools">Tools</a>
+    <a href="#other">Other apps</a>
+    <a href="#privacy">Privacy &amp; sign-in</a>
+    <a href="#trouble">Troubleshooting</a>
+  </aside>
+
+  <article>
+    <section id="setup">
+      <h2>Connect your agent</h2>
+      <p>Pick your app, add ARCO, sign in with Apple once. Nothing to install.</p>
+      <div class="connect">
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-pane="cc">Claude Code</button>
+          <button role="tab" aria-selected="false" data-pane="claude">Claude</button>
+          <button role="tab" aria-selected="false" data-pane="gpt">ChatGPT</button>
+          <button role="tab" aria-selected="false" data-pane="cursor">Cursor</button>
+          <button role="tab" aria-selected="false" data-pane="codex">Codex</button>
+        </div>
+
+        <div class="pane" id="cc" role="tabpanel">
+          <pre id="c1">claude mcp add -s user -t http arco https://mcp.tryarco.app/mcp<button class="copy" data-copy="c1">Copy</button></pre>
+          <ol>
+            <li>Run the command in a terminal. It adds ARCO to every project, not just this folder.</li>
+            <li>Start Claude Code, run <code>/mcp</code>, pick <code>arco</code> and choose <b>Authenticate</b>. A browser tab opens: press <b>Continue with Apple</b> and sign in.</li>
+            <li>Ask: <b>"What's on my plate today?"</b></li>
+          </ol>
+        </div>
+
+        <div class="pane" id="claude" role="tabpanel" hidden>
+          <pre id="c2">https://mcp.tryarco.app/mcp<button class="copy" data-copy="c2">Copy</button></pre>
+          <ol>
+            <li>In Claude (web or desktop), open <b>Settings → Connectors</b> and choose <b>Add custom connector</b>.</li>
+            <li>Name it <b>ARCO</b>, paste the URL, add it, then press <b>Connect</b> and sign in with Apple.</li>
+            <li>In a chat, turn ARCO on from the tools menu and ask: <b>"Plan my afternoon."</b></li>
+          </ol>
+        </div>
+
+        <div class="pane" id="gpt" role="tabpanel" hidden>
+          <pre id="c3">https://mcp.tryarco.app/mcp<button class="copy" data-copy="c3">Copy</button></pre>
+          <ol>
+            <li>In ChatGPT, open <b>Settings → Apps</b>. Under <b>Advanced settings</b>, turn on <b>Developer mode</b>.</li>
+            <li>Choose <b>Create app</b>, name it <b>ARCO</b>, paste the URL, pick <b>OAuth</b>, then sign in with Apple.</li>
+            <li>In a chat, add ARCO from the <b>+</b> menu and ask: <b>"What's overdue?"</b></li>
+          </ol>
+        </div>
+
+        <div class="pane" id="cursor" role="tabpanel" hidden>
+          <pre id="c4">{
+  "mcpServers": {
+    "arco": { "url": "https://mcp.tryarco.app/mcp" }
+  }
+}<button class="copy" data-copy="c4">Copy</button></pre>
+          <ol>
+            <li>Open <b>Cursor Settings → MCP</b> and choose <b>Add custom MCP</b>, or paste this into <code>~/.cursor/mcp.json</code>.</li>
+            <li>ARCO shows <b>Needs login</b>: press it and sign in with Apple.</li>
+            <li>Ask the agent: <b>"Add 'fix the iPad paywall' for tomorrow at 10."</b></li>
+          </ol>
+        </div>
+
+        <div class="pane" id="codex" role="tabpanel" hidden>
+          <pre id="c5">codex mcp add arco --url https://mcp.tryarco.app/mcp
+codex mcp login arco<button class="copy" data-copy="c5">Copy</button></pre>
+          <ol>
+            <li>Run both commands in a terminal. The second opens the sign-in: press <b>Continue with Apple</b>.</li>
+            <li>Start Codex. ARCO's tools are there in every project.</li>
+            <li>Ask: <b>"Check off the release notes and plan tomorrow."</b></li>
+          </ol>
+        </div>
+      </div>
+      <p>The sign-in page says what ARCO will let the app do before Apple's sign-in opens. Use the Apple Account your iPhone uses for iCloud: that's where ARCO keeps your plan.</p>
+    </section>
+
+    <section id="ask">
+      <h2>What to ask</h2>
+      <p>Talk to it the way you'd talk to an assistant who can see your planner:</p>
+      <div class="grid2">
+        <div class="card"><h4>Morning</h4><ul><li>"What's on my plate today?"</li><li>"Plan my afternoon, hardest thing first, gym stays at 18:00."</li></ul></div>
+        <div class="card"><h4>During the day</h4><ul><li>"Proposal's sent, check it off and add a follow-up for Friday."</li><li>"Push everything I didn't finish to tomorrow."</li></ul></div>
+        <div class="card"><h4>While you work</h4><ul><li>"Add 'fix the iPad paywall' to the ARCO project, high priority."</li><li>"What's overdue?"</li></ul></div>
+        <div class="card"><h4>Habits</h4><ul><li>"I went for a run, check it off."</li><li>"Which habits are still open today?"</li></ul></div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <h2>Tools</h2>
+      <p>Thirteen tools. Days take <code>today</code>, <code>tomorrow</code>, a weekday name, or <code>YYYY-MM-DD</code>. Times are <code>HH:MM</code>, 24-hour; leaving a time out means Anytime. Priority is <code>0</code> none, <code>1</code> low, <code>2</code> medium, <code>3</code> high. Wherever a tool takes a task, it accepts the task's id or the exact title of an open task.</p>
+
+      <h3>Tasks</h3>
+      <div class="tools">
+        <div class="tool"><div class="h"><code>list_tasks</code><span class="tag r">read</span></div>
+          <p>Your tasks. Open tasks unless you pick a scope.</p>
+          <dl class="params">
+            <dt><code>scope</code><i>optional</i></dt><dd><code>open</code>, <code>today</code> (open and due today or earlier), <code>overdue</code>, <code>upcoming</code>, <code>anytime</code>, <code>done</code> (newest first), <code>all</code></dd>
+            <dt><code>project</code><i>optional</i></dt><dd>A project name, or <code>Inbox</code></dd>
+            <dt><code>query</code><i>optional</i></dt><dd>Text to look for in titles and notes</dd>
+            <dt><code>limit</code><i>optional</i></dt><dd>1–500</dd>
+          </dl></div>
+        <div class="tool"><div class="h"><code>add_task</code><span class="tag w">write</span></div>
+          <p>Adds a task. It shows up on your iPhone within seconds.</p>
+          <dl class="params">
+            <dt><code>title</code></dt><dd>The task</dd>
+            <dt><code>project</code><i>optional</i></dt><dd>An existing project; leave out for the Inbox</dd>
+            <dt><code>notes</code><i>optional</i></dt><dd>Notes</dd>
+            <dt><code>priority</code><i>optional</i></dt><dd>0–3</dd>
+            <dt><code>date</code><i>optional</i></dt><dd>Defaults to today</dd>
+            <dt><code>time</code><i>optional</i></dt><dd>Gives it a block on the timeline</dd>
+            <dt><code>durationMin</code><i>optional</i></dt><dd>5–1440, with a time; defaults to 60</dd>
+          </dl></div>
+        <div class="tool"><div class="h"><code>update_task</code><span class="tag w">write</span></div>
+          <p>Changes any part of a task.</p>
+          <dl class="params">
+            <dt><code>id</code></dt><dd>Task id or exact open title</dd>
+            <dt><code>title</code>, <code>notes</code>, <code>priority</code>, <code>project</code>, <code>date</code>, <code>time</code><i>optional</i></dt><dd>New values; <code>notes</code> replaces the old notes</dd>
+            <dt><code>anytime</code><i>optional</i></dt><dd><code>true</code> takes the time off</dd>
+            <dt><code>durationMin</code><i>optional</i></dt><dd>5–1440</dd>
+            <dt><code>inProgress</code><i>optional</i></dt><dd>Marks it started or stopped</dd>
+          </dl></div>
+        <div class="tool"><div class="h"><code>complete_task</code><span class="tag w">write</span></div>
+          <p>Checks a task off. <code>task</code>: id or exact open title.</p></div>
+        <div class="tool"><div class="h"><code>reopen_task</code><span class="tag w">write</span></div>
+          <p>Marks a done task as not done. <code>task</code>: id.</p></div>
+        <div class="tool"><div class="h"><code>delete_task</code><span class="tag d">deletes</span></div>
+          <p>Deletes a task for good. Agents are told to check things off instead when the work is finished. <code>task</code>: id or exact open title.</p></div>
+      </div>
+
+      <h3>Projects</h3>
+      <div class="tools">
+        <div class="tool"><div class="h"><code>list_projects</code><span class="tag r">read</span></div>
+          <p>Your projects, each with its count of open tasks.</p></div>
+        <div class="tool"><div class="h"><code>add_project</code><span class="tag w">write</span></div>
+          <p>Creates a project, or returns the one that already has that name.</p>
+          <dl class="params">
+            <dt><code>name</code></dt><dd>Project name</dd>
+            <dt><code>color</code><i>optional</i></dt><dd>Hex, like <code>#30D158</code></dd>
+          </dl></div>
+      </div>
+
+      <h3>Your day</h3>
+      <div class="tools">
+        <div class="tool"><div class="h"><code>get_day</code><span class="tag r">read</span></div>
+          <p>A day the way the Today screen shows it: timed tasks, events, habits and Blocked Hours in time order, then Anytime tasks and untimed habits. <code>date</code> defaults to today.</p></div>
+        <div class="tool"><div class="h"><code>plan_day</code><span class="tag w">write</span></div>
+          <p>Puts several tasks on a day in one change, each at a time or as Anytime. Agents look at <code>get_day</code> first so blocks don't overlap.</p>
+          <dl class="params">
+            <dt><code>date</code></dt><dd>The day to plan</dd>
+            <dt><code>items</code></dt><dd>A list of <code>{ task, time?, durationMin? }</code></dd>
+          </dl></div>
+        <div class="tool"><div class="h"><code>list_blocked_hours</code><span class="tag r">read</span></div>
+          <p>Your Blocked Hours windows. Read only: the iPhone is what arms the blocks, so changing them stays on the phone.</p></div>
+      </div>
+
+      <h3>Habits</h3>
+      <div class="tools">
+        <div class="tool"><div class="h"><code>list_habits</code><span class="tag r">read</span></div>
+          <p>Your habits, their schedule, and whether each is done. <code>date</code> defaults to today.</p></div>
+        <div class="tool"><div class="h"><code>check_habit</code><span class="tag w">write</span></div>
+          <p>Checks a habit off for a day. Agents only do this when you say you did it.</p>
+          <dl class="params">
+            <dt><code>habit</code></dt><dd>Habit id or exact name</dd>
+            <dt><code>date</code><i>optional</i></dt><dd>Defaults to today</dd>
+            <dt><code>done</code><i>optional</i></dt><dd><code>false</code> clears it; defaults to <code>true</code></dd>
+          </dl></div>
+      </div>
+    </section>
+
+    <section id="other">
+      <h2>Other apps</h2>
+      <p>Any app that supports remote MCP servers with sign-in works. Give it this URL; it finds the sign-in on its own:</p>
+      <pre id="p3">https://mcp.tryarco.app/mcp<button class="copy" data-copy="p3">Copy</button></pre>
+      <p>It speaks MCP over Streamable HTTP and signs in with OAuth 2.1, including dynamic client registration.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy &amp; sign-in</h2>
+      <p>ARCO keeps your plan in your own iCloud, which is how it syncs between your devices. When your agent asks for something, ARCO's server fetches it from iCloud through Apple's CloudKit, the way iCloud.com does in a browser, and passes it on. Your tasks are never stored on ARCO's server.</p>
+      <div class="grid2">
+        <div class="card"><h4>Your agent can</h4><ul><li>See your tasks, habits and timeline</li><li>Plan your day and move tasks</li><li>Add, edit, check off and delete tasks</li><li>See your Blocked Hours</li></ul></div>
+        <div class="card"><h4>It can't</h4><ul><li>See your Apple password</li><li>See your Screen Time data, which stays on your iPhone</li><li>Change your blocked apps or your subscription</li></ul></div>
+      </div>
+      <h3>What ARCO's server keeps</h3>
+      <ul>
+        <li><b>Your iCloud sign-in for ARCO, encrypted,</b> so your agent can reach your plan without asking you to sign in every time.</li>
+        <li><b>Your time zone,</b> so "today" means your today.</li>
+        <li><b>Nothing else.</b> Tasks pass through in memory and are never written down.</li>
+        <li><b>Gone after 30 days unused,</b> or as soon as iCloud ends the sign-in. To disconnect sooner, remove ARCO in your app's connector settings.</li>
+        <li><b>Each app asks first.</b> Every new app gets its own consent page, and the sign-in only works in the browser that started it.</li>
+      </ul>
+    </section>
+
+    <section id="trouble">
+      <h2>Troubleshooting</h2>
+      <dl class="faq">
+        <dt>"ARCO's iCloud sign-in has ended"</dt>
+        <dd>Reconnect ARCO in your app's connector settings (in Claude Code: <code>/mcp</code> → arco → Authenticate). That opens Apple's sign-in again.</dd>
+        <dt>"This iCloud account has no ARCO data yet"</dt>
+        <dd>Open ARCO on your iPhone with iCloud on for it, wait a minute for it to sync, then try again. Check you signed in with the same Apple Account your iPhone uses.</dd>
+        <dt>It says ARCO Premium is needed</dt>
+        <dd>Connecting an agent is part of Premium. Open ARCO 2.1.3 or later on your iPhone once so it can confirm your subscription, then connect again.</dd>
+        <dt>It says ARCO needs updating</dt>
+        <dd>Update ARCO from the App Store and open it once. That links your subscription to your iCloud so the sign-in can find it.</dd>
+        <dt>My agent doesn't show the ARCO tools</dt>
+        <dd>Finish the sign-in first, then start a new chat or restart the agent. In Claude and ChatGPT, turn ARCO on for the chat.</dd>
+        <dt>A change doesn't show on my iPhone</dt>
+        <dd>Changes usually arrive within seconds. Opening ARCO makes it sync straight away.</dd>
+      </dl>
+      <p>Still stuck? Email <a href="mailto:support@tryarco.app">support@tryarco.app</a>.</p>
+    </section>
+  </article>
+</div>
+
+<footer><div class="foot">
+  <span>© 2026 <span class="wm" role="img" aria-label="ARCO"></span></span>
+  <a href="index.html">Home</a>
+  <a href="guides/">Guides</a>
+  <a href="support.html">Support</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+  <a class="right" href="mailto:support@tryarco.app">support@tryarco.app</a>
+</div></footer>
+
+<script>
+document.querySelectorAll('.tabs button').forEach(function (t) {
+  t.addEventListener('click', function () {
+    document.querySelectorAll('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', x === t); });
+    document.querySelectorAll('.pane').forEach(function (p) { p.hidden = p.id !== t.dataset.pane; });
+  });
+});
+document.querySelectorAll('.copy').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var pre = document.getElementById(b.dataset.copy).cloneNode(true);
+    pre.querySelectorAll('.copy').forEach(function (x) { x.remove(); });
+    navigator.clipboard.writeText(pre.textContent.trim()).then(function () {
+      b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1400);
+    });
+  });
+});
+</script>
+</body>
+</html>
